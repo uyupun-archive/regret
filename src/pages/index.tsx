@@ -1,4 +1,32 @@
 const Index = () => {
+  const addService = () => {
+
+  };
+
+  const editService = () => {
+
+  };
+
+  const deleteService = () => {
+
+  };
+
+  const openService = () => {
+
+  };
+
+  const addCategory = () => {
+
+  };
+
+  const editCategory = () => {
+
+  };
+
+  const deleteCategory = () => {
+
+  };
+
   return (
     <div className="container">
       <div className="mt-4 mb-4 d-flex align-items-center">
@@ -63,6 +91,17 @@ const Index = () => {
       <div>
         <h3>問い合わせカテゴリ一覧</h3>
         <h4>▶ official</h4>
+        <form className="row g-1 mb-2">
+          <div className="col-3">
+            <input type="text" className="form-control" placeholder="カテゴリ名" />
+          </div>
+          <div className="col-3">
+            <input type="text" className="form-control" placeholder="カテゴリ名（日本語）" />
+          </div>
+          <div className="col-2">
+            <button className="btn btn-outline-primary">追加</button>
+          </div>
+        </form>
         <table className="table">
           <thead>
             <tr>
