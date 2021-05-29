@@ -1,6 +1,6 @@
 const Index = () => {
   return (
-    <div>test</div>
+    <div>コントロールパネル</div>
   )
 };
 
