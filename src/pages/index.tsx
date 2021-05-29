@@ -66,10 +66,10 @@ const Index = () => {
         <table className="table">
           <thead>
             <tr>
-              <td>ID</td>
-              <td>カテゴリ名</td>
-              <td>カテゴリ名（日本語）</td>
-              <td>操作</td>
+              <th>ID</th>
+              <th>カテゴリ名</th>
+              <th>カテゴリ名（日本語）</th>
+              <th>操作</th>
             </tr>
           </thead>
           <tbody>
