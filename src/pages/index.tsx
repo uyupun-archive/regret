@@ -1,4 +1,23 @@
+import {useState} from 'react';
+
 const Index = () => {
+  const [services, setServices] = useState([
+    {
+      id: 1,
+      name: 'official',
+      name_ja: 'オフィシャル',
+      description: 'オフィシャルサイトです',
+      access_token: 'xxxxxxxxxxxxxxxxx'
+    },
+    {
+      id: 2,
+      name: 'takakeibo',
+      name_ja: 'たかしのカケイボ',
+      description: '家計簿アプリです',
+      access_token: 'xxxxxxxxxxxxxxxxx'
+    }
+  ]);
+
   const addService = () => {
 
   };
@@ -61,30 +80,22 @@ const Index = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1</td>
-              <td>official</td>
-              <td>オフィシャル</td>
-              <td>オフィシャルサイトです</td>
-              <td>xxxxxxxxxxxxxxxxx</td>
-              <td>
-                <button type="button" className="btn btn-outline-success btn-sm">編集</button>
-                <button type="button" className="btn btn-outline-danger btn-sm ms-1">削除</button>
-                <button type="button" className="btn btn-outline-dark btn-sm ms-1">開く</button>
-              </td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>takakeibo</td>
-              <td>たかしのカケイボ</td>
-              <td>家計簿アプリです</td>
-              <td>xxxxxxxxxxxxxxxxx</td>
-              <td>
-                <button type="button" className="btn btn-outline-success btn-sm">編集</button>
-                <button type="button" className="btn btn-outline-danger btn-sm ms-1">削除</button>
-                <button type="button" className="btn btn-outline-dark btn-sm ms-1">開く</button>
-              </td>
-            </tr>
+            {services.map(service => {
+              return (
+                <tr>
+                  <td>{service.id}</td>
+                  <td>{service.name}</td>
+                  <td>{service.name_ja}</td>
+                  <td>{service.description}</td>
+                  <td>{service.access_token}</td>
+                  <td>
+                    <button type="button" className="btn btn-outline-success btn-sm">編集</button>
+                    <button type="button" className="btn btn-outline-danger btn-sm ms-1">削除</button>
+                    <button type="button" className="btn btn-outline-dark btn-sm ms-1">開く</button>
+                  </td>
+                </tr>
+              )
+            })}
           </tbody>
         </table>
       </div>
