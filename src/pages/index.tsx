@@ -1,7 +1,8 @@
 import {useState, Fragment} from 'react';
+import {Service} from '../models/service';
 
 const Index = () => {
-  const [services, setServices] = useState([
+  const [services, setServices] = useState<Array<Service>>([
     {
       id: 1,
       name: 'official',
@@ -18,13 +19,13 @@ const Index = () => {
     }
   ]);
 
-  const [editingService, setEditingService] = useState({});
+  const [editingService, setEditingService] = useState<Service | object>({});
 
   const addService = () => {
 
   };
 
-  const editService = (service) => {
+  const editService = (service: Service) => {
     setEditingService(service);
   };
 
