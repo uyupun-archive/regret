@@ -7,7 +7,8 @@
 ### 環境構築（API）
 
 ```bash
-$ go run main.go    # localhost:1323
+$ make setup
+$ make run    # localhost:1323
 ```
 
 ### 環境構築（コンパネ）
