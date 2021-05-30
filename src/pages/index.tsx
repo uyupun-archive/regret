@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, Fragment} from 'react';
 
 const Index = () => {
   const [services, setServices] = useState([
@@ -18,12 +18,14 @@ const Index = () => {
     }
   ]);
 
+  const [editingService, setEditingService] = useState({});
+
   const addService = () => {
 
   };
 
-  const editService = () => {
-
+  const editService = (service) => {
+    setEditingService(service);
   };
 
   const deleteService = () => {
@@ -32,6 +34,10 @@ const Index = () => {
 
   const openService = () => {
 
+  };
+
+  const saveService = () => {
+    setEditingService({});
   };
 
   const addCategory = () => {
@@ -80,20 +86,42 @@ const Index = () => {
             </tr>
           </thead>
           <tbody>
-            {services.map(service => {
+            {services.map((service, idx) => {
               return (
-                <tr>
-                  <td>{service.id}</td>
-                  <td>{service.name}</td>
-                  <td>{service.name_ja}</td>
-                  <td>{service.description}</td>
-                  <td>{service.access_token}</td>
-                  <td>
-                    <button type="button" className="btn btn-outline-success btn-sm">編集</button>
-                    <button type="button" className="btn btn-outline-danger btn-sm ms-1">削除</button>
-                    <button type="button" className="btn btn-outline-dark btn-sm ms-1">開く</button>
-                  </td>
-                </tr>
+                <Fragment key={service.id}>
+                  {editingService.id !== service.id &&
+                    <tr>
+                      <td>{service.id}</td>
+                      <td>{service.name}</td>
+                      <td>{service.name_ja}</td>
+                      <td>{service.description}</td>
+                      <td>{service.access_token}</td>
+                      <td>
+                        <button type="button" className="btn btn-outline-success btn-sm" onClick={() => {editService(service)}}>編集</button>
+                        <button type="button" className="btn btn-outline-danger btn-sm ms-1">削除</button>
+                        <button type="button" className="btn btn-outline-dark btn-sm ms-1">開く</button>
+                      </td>
+                    </tr>
+                  }
+                  {editingService.id === service.id &&
+                    <tr>
+                      <td>{service.id}</td>
+                      <td>
+                        <input type="text" className="form-control" defaultValue={service.name} />
+                      </td>
+                      <td>
+                        <input type="text" className="form-control" defaultValue={service.name_ja} />
+                      </td>
+                      <td>
+                        <input type="text" className="form-control" defaultValue={service.description} />
+                      </td>
+                      <td>{service.access_token}</td>
+                      <td>
+                        <button type="button" className="btn btn-outline-success btn-sm" onClick={saveService}>保存</button>
+                      </td>
+                    </tr>
+                  }
+                </Fragment>
               )
             })}
           </tbody>
