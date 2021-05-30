@@ -9,7 +9,7 @@ type Config struct {
 }
 
 func Load() (*Config, error) {
-	viper.SetConfigFile("./cmd/config/config.yaml")
+	viper.SetConfigFile("./cmd/config/config.yml")
 
 	err := viper.ReadInConfig()
 	if err != nil {
