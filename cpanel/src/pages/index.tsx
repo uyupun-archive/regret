@@ -1,5 +1,6 @@
 import {useState, Fragment} from 'react';
-import {Service} from '../models/service';
+import axios from 'axios';
+import {Service, AddService, initAddService} from '../models/service';
 
 const Index = () => {
   const [services, setServices] = useState<Array<Service>>([
@@ -19,10 +20,12 @@ const Index = () => {
     }
   ]);
 
+  const [addingService, setAddingService] = useState<AddService>(initAddService());
   const [editingService, setEditingService] = useState<Service | object>({});
 
-  const addService = () => {
-
+  const addService = async (e: { preventDefault: () => void; }) => {
+    e.preventDefault();
+    const res = await axios.post('http://localhost:3000/api/service', addingService);
   };
 
   const editService = (service: Service) => {
@@ -61,15 +64,21 @@ const Index = () => {
       </div>
       <div className="mb-4">
         <h3>登録サービス一覧</h3>
-        <form className="row g-1 mb-2">
+        <form className="row g-1 mb-2" onSubmit={addService}>
           <div className="col-3">
-            <input type="text" className="form-control" placeholder="サービス名" />
+            <input type="text" className="form-control" placeholder="サービス名" onChange={(e) => {
+              setAddingService({...addingService, name: e.target.value});
+            }} />
           </div>
           <div className="col-3">
-            <input type="text" className="form-control" placeholder="サービス名（日本語）" />
+            <input type="text" className="form-control" placeholder="サービス名（日本語）" onChange={(e) => {
+              setAddingService({...addingService, name_ja: e.target.value});
+            }} />
           </div>
           <div className="col-4">
-            <input type="text" className="form-control" placeholder="備考" />
+            <input type="text" className="form-control" placeholder="備考" onChange={(e) => {
+              setAddingService({...addingService, description: e.target.value});
+            }} />
           </div>
           <div className="col-2">
             <button className="btn btn-outline-primary">追加</button>

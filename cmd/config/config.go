@@ -5,7 +5,7 @@ import (
 )
 
 type Config struct {
-	ListenAddress string `json:"listenAddress",yaml:"listenAddress"`
+	ListenAddress string `json:"listen_address" yaml:"listenAddress"`
 }
 
 func Load() (*Config, error) {
