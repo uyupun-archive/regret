@@ -1,6 +1,6 @@
 import {useState, Fragment} from 'react';
 import axios from 'axios';
-import {Service, AddService, initAddService} from '../models/service';
+import {Service, AddService, initService, initAddService} from '../models/service';
 
 const Index = () => {
   const [services, setServices] = useState<Array<Service>>([
@@ -21,7 +21,7 @@ const Index = () => {
   ]);
 
   const [addingService, setAddingService] = useState<AddService>(initAddService());
-  const [editingService, setEditingService] = useState<Service | object>({});
+  const [editingService, setEditingService] = useState<Service>(initService());
 
   const addService = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
@@ -41,7 +41,7 @@ const Index = () => {
   };
 
   const saveService = () => {
-    setEditingService({});
+    setEditingService(initService());
   };
 
   const addCategory = () => {
