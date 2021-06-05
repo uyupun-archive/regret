@@ -1,4 +1,5 @@
 setup:
+	cp .env.example .env
 	go get github.com/cespare/reflex
 
 run:
