@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+  mysql:
+    container_name: regret_mysql
+    hostname: regret_mysql
+    image: mysql:8.0
+    ports:
+      - ${DB_PORT}:3306
+    volumes:
+      - ./docker/mysql/data:/var/lib/mysql
+      - ./docker/mysql/logs:/var/log/mysql
+      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      TZ: "Asia/Tokyo"
+    restart: always
