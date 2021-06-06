@@ -11,7 +11,20 @@ import (
 )
 
 func main() {
-	migrateUp()
+	args := os.Args
+	if len(args) != 2 {
+		panic("Too few arguments")
+	}
+
+	command := args[1]
+	fmt.Println(command)
+	if command == "up" {
+		migrateUp()
+	} else if command == "down" {
+		migrateDown()
+	} else {
+		panic("Command not match")
+	}
 }
 
 func migrateUp() {
@@ -21,6 +34,19 @@ func migrateUp() {
 	defer db.Close()
 
 	n, err := migrate.Exec(db, "mysql", migrations, migrate.Up)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("Applied %d migrations!\n", n)
+}
+
+func migrateDown() {
+	migrations := getMigrationsRef()
+
+	db := connectDB()
+	defer db.Close()
+
+	n, err := migrate.Exec(db, "mysql", migrations, migrate.Down)
 	if err != nil {
 		panic(err)
 	}

@@ -4,7 +4,7 @@ init:
 
 db:
 	docker-compose up -d
-	make migrate
+	make migrate/up
 
 api:
 	reflex -r '\.go|config.yml\z' -s -- sh -c 'go run cmd/main.go cmd/router.go'
@@ -15,5 +15,8 @@ ps:
 sh:
 	docker compose exec mysql bash
 
-migrate:
-	go run db/migrate.go
+migrate/up:
+	go run db/migrate.go up
+
+migrate/down:
+	go run db/migrate.go down
