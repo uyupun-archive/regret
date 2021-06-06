@@ -7,8 +7,9 @@
 ### 環境構築（API）
 
 ```bash
-$ make setup
-$ make run    # localhost:1323
+$ make init
+$ make db
+$ make api  # localhost:1323
 ```
 
 ### 環境構築（コンパネ）
