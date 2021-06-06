@@ -1,6 +1,6 @@
 setup:
 	cp .env.example .env
-	go get github.com/cespare/reflex
+	go install github.com/cespare/reflex
 
 run:
 	docker compose up -d
