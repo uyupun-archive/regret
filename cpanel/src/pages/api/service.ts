@@ -5,15 +5,17 @@ type Data = {
   name: string;
 };
 
+const apiEndpoint = process.env.API_ENDPOINT;
+
 const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   if (req.method === 'GET') {
-    await axios.get('http://localhost:1323/api/v0/service').then(_res => {
+    await axios.get(`${apiEndpoint}/service`).then(_res => {
       res.status(200).json(_res.data)
     })
   }
 
   if (req.method === 'POST') {
-    await axios.post('http://localhost:1323/api/v0/service', req.body).then(() => {
+    await axios.post(`${apiEndpoint}/service`, req.body).then(() => {
       res.status(200).json({name: "test"})
     })
   }

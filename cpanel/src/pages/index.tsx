@@ -3,20 +3,21 @@ import axios from 'axios';
 import {Service, AddService, initService, initAddService} from '../models/service';
 
 const Index = () => {
-  const [services, setServices] = useState<Array<Service>>([]);
+  const apiEndpoint = process.env.NEXT_PUBLIC_API_ENDPOINT;
 
+  const [services, setServices] = useState<Array<Service>>([]);
   const [addingService, setAddingService] = useState<AddService>(initAddService());
   const [editingService, setEditingService] = useState<Service>(initService());
 
   const fetchServices = () => {
-    axios.get('http://localhost:3000/api/service').then(res => {
+    axios.get(`${apiEndpoint}/service`).then(res => {
       setServices(res.data);
     });
   };
 
   const addService = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
-    return await axios.post('http://localhost:3000/api/service', addingService);
+    return await axios.post(`${apiEndpoint}/service`, addingService);
   };
 
   const editService = (service: Service) => {
