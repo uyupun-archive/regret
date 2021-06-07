@@ -107,9 +107,11 @@ const Index = () => {
                       <td>{service.description}</td>
                       <td>{service.access_token}</td>
                       <td>
-                        <button type="button" className="btn btn-outline-success btn-sm" onClick={() => {editService(service)}}>編集</button>
-                        <button type="button" className="btn btn-outline-danger btn-sm ms-1">削除</button>
-                        <button type="button" className="btn btn-outline-dark btn-sm ms-1">開く</button>
+                        <div className="d-flex justify-content-around">
+                          <button type="button" className="btn btn-outline-success btn-sm" onClick={() => {editService(service)}}>編集</button>
+                          <button type="button" className="btn btn-outline-danger btn-sm">削除</button>
+                          <button type="button" className="btn btn-outline-dark btn-sm">開く</button>
+                        </div>
                       </td>
                     </tr>
                   }
