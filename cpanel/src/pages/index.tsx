@@ -59,21 +59,22 @@ const Index = () => {
         <h3>登録サービス一覧</h3>
         <form className="row g-1 mb-2" onSubmit={(e) => {
           addService(e).then(() => {
+            setAddingService(initAddService());
             fetchServices();
           });
         }}>
           <div className="col-3">
-            <input type="text" className="form-control" placeholder="サービス名" onChange={(e) => {
+            <input type="text" className="form-control" placeholder="サービス名" value={addingService.name} onChange={(e) => {
               setAddingService({...addingService, name: e.target.value});
             }} />
           </div>
           <div className="col-3">
-            <input type="text" className="form-control" placeholder="サービス名（日本語）" onChange={(e) => {
+            <input type="text" className="form-control" placeholder="サービス名（日本語）" value={addingService.name_ja} onChange={(e) => {
               setAddingService({...addingService, name_ja: e.target.value});
             }} />
           </div>
           <div className="col-4">
-            <input type="text" className="form-control" placeholder="備考" onChange={(e) => {
+            <input type="text" className="form-control" placeholder="備考" value={addingService.description} onChange={(e) => {
               setAddingService({...addingService, description: e.target.value});
             }} />
           </div>
