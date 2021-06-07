@@ -11,18 +11,7 @@ const Index = () => {
   const [editingService, setEditingService] = useState<Service>(initService());
   const [openedService, setOpenedService] = useState<Service | null>(null);
 
-  const [categories, setCategories] = useState<Array<Category>>([
-    {
-      id: 1,
-      name: 'bug',
-      name_ja: 'バグ報告'
-    },
-    {
-      id: 2,
-      name: 'opinion',
-      name_ja: '意見'
-    }
-  ]);
+  const [categories, setCategories] = useState<Array<Category>>([]);
 
   const fetchServices = () => {
     axios.get(`${apiEndpoint}/service`).then(res => {
@@ -45,11 +34,23 @@ const Index = () => {
 
   const openService = (service: Service) => {
     setOpenedService(service);
+    fetchCategories(service.id);
   };
 
   const saveService = async () => {
     setEditingService(initService());
     return await axios.patch(`${apiEndpoint}/service`, editingService);
+  };
+
+  const fetchCategories = (serviceId: number) => {
+    axios.get(`${apiEndpoint}/category`, {
+      params: {
+        service_id: serviceId
+      }
+    }).then(res => {
+      console.log(res);
+      setCategories(res.data);
+    });
   };
 
   const addCategory = () => {
