@@ -1,6 +1,7 @@
 import {useState, useEffect, Fragment} from 'react';
 import axios from 'axios';
 import {Service, AddService, initService, initAddService} from '../models/service';
+import {Category} from '../models/category';
 
 const Index = () => {
   const apiEndpoint = process.env.NEXT_PUBLIC_API_ENDPOINT;
@@ -8,6 +9,20 @@ const Index = () => {
   const [services, setServices] = useState<Array<Service>>([]);
   const [addingService, setAddingService] = useState<AddService>(initAddService());
   const [editingService, setEditingService] = useState<Service>(initService());
+  const [openedService, setOpenedService] = useState<Service | null>(null);
+
+  const [categories, setCategories] = useState<Array<Category>>([
+    {
+      id: 1,
+      name: 'bug',
+      name_ja: 'バグ報告'
+    },
+    {
+      id: 2,
+      name: 'opinion',
+      name_ja: '意見'
+    }
+  ]);
 
   const fetchServices = () => {
     axios.get(`${apiEndpoint}/service`).then(res => {
@@ -28,8 +43,8 @@ const Index = () => {
     return await axios.delete(`${apiEndpoint}/service`, {data: service});
   };
 
-  const openService = () => {
-
+  const openService = (service: Service) => {
+    setOpenedService(service);
   };
 
   const saveService = async () => {
@@ -100,7 +115,7 @@ const Index = () => {
               </tr>
             </thead>
             <tbody>
-              {services.map((service, idx) => {
+              {services.map(service => {
                 return (
                   <Fragment key={service.id}>
                     {editingService.id !== service.id &&
@@ -118,7 +133,7 @@ const Index = () => {
                                 fetchServices();
                               });
                             }}>削除</button>
-                            <button type="button" className="btn btn-outline-dark btn-sm">開く</button>
+                            <button type="button" className="btn btn-outline-dark btn-sm" onClick={() => openService(service)}>開く</button>
                           </div>
                         </td>
                       </tr>
@@ -158,51 +173,48 @@ const Index = () => {
           </table>
         )}
       </div>
-      <div>
-        <h3>問い合わせカテゴリ一覧</h3>
-        <h4>▶ official</h4>
-        <form className="row g-1 mb-2">
-          <div className="col-3">
-            <input type="text" className="form-control" placeholder="カテゴリ名" />
-          </div>
-          <div className="col-3">
-            <input type="text" className="form-control" placeholder="カテゴリ名（日本語）" />
-          </div>
-          <div className="col-2">
-            <button className="btn btn-outline-primary">追加</button>
-          </div>
-        </form>
-        <table className="table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>カテゴリ名</th>
-              <th>カテゴリ名（日本語）</th>
-              <th>操作</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>bug</td>
-              <td>バグ報告</td>
-              <td>
-                <button type="button" className="btn btn-outline-success btn-sm">編集</button>
-                <button type="button" className="btn btn-outline-danger btn-sm ms-1">削除</button>
-              </td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>opinion</td>
-              <td>意見</td>
-              <td>
-                <button type="button" className="btn btn-outline-success btn-sm">編集</button>
-                <button type="button" className="btn btn-outline-danger btn-sm ms-1">削除</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      {openedService && (
+        <div>
+          <h3>問い合わせカテゴリ一覧</h3>
+          <h4>▶ {openedService.id}: {openedService.name}({openedService.name_ja})</h4>
+          <form className="row g-1 mb-2">
+            <div className="col-3">
+              <input type="text" className="form-control" placeholder="カテゴリ名" />
+            </div>
+            <div className="col-3">
+              <input type="text" className="form-control" placeholder="カテゴリ名（日本語）" />
+            </div>
+            <div className="col-2">
+              <button className="btn btn-outline-primary">追加</button>
+            </div>
+          </form>
+          <table className="table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>カテゴリ名</th>
+                <th>カテゴリ名（日本語）</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              {categories.map(category => {
+                return (
+                  <tr key={category.id}>
+                    <td>{category.id}</td>
+                    <td>{category.name}</td>
+                    <td>{category.name_ja}</td>
+                    <td>
+                      <button type="button" className="btn btn-outline-success btn-sm">編集</button>
+                      <button type="button" className="btn btn-outline-danger btn-sm ms-1">削除</button>
+                    </td>
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   )
 };
