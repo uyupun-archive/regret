@@ -24,8 +24,8 @@ const Index = () => {
     setEditingService(service);
   };
 
-  const deleteService = () => {
-
+  const deleteService = async (service: Service) => {
+    return await axios.delete(`${apiEndpoint}/service`, {data: service});
   };
 
   const openService = () => {
@@ -107,8 +107,12 @@ const Index = () => {
                       <td>{service.access_token}</td>
                       <td>
                         <div className="d-flex justify-content-around">
-                          <button type="button" className="btn btn-outline-success btn-sm" onClick={() => {editService(service)}}>編集</button>
-                          <button type="button" className="btn btn-outline-danger btn-sm">削除</button>
+                          <button type="button" className="btn btn-outline-success btn-sm" onClick={() => editService(service)}>編集</button>
+                          <button type="button" className="btn btn-outline-danger btn-sm" onClick={() => {
+                            deleteService(service).then(() => {
+                              fetchServices();
+                            });
+                          }}>削除</button>
                           <button type="button" className="btn btn-outline-dark btn-sm">開く</button>
                         </div>
                       </td>

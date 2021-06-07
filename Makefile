@@ -20,3 +20,7 @@ migrate/up:
 
 migrate/down:
 	go run database/migrations/migrate.go down
+
+migrate/fresh:
+	make migrate/down
+	make migrate/up
