@@ -33,6 +33,21 @@ func AddService(c echo.Context) error {
 	return c.JSON(http.StatusOK, "{}")
 }
 
+func EditService(c echo.Context) error {
+	service := new(models.Service)
+	err := c.Bind(&service)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, err)
+	}
+
+	err = query.EditService(*service)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err)
+	}
+
+	return c.JSON(http.StatusOK, "{}")
+}
+
 func DeleteService(c echo.Context) error {
 	service := new(models.Service)
 	err := c.Bind(&service)

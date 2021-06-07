@@ -32,8 +32,9 @@ const Index = () => {
 
   };
 
-  const saveService = () => {
+  const saveService = async () => {
     setEditingService(initService());
+    return await axios.patch(`${apiEndpoint}/service`, editingService);
   };
 
   const addCategory = () => {
@@ -124,19 +125,29 @@ const Index = () => {
                     }
                     {editingService.id === service.id &&
                       <tr>
-                        <td>{service.id}</td>
+                        <td>{editingService.id}</td>
                         <td>
-                          <input type="text" className="form-control" defaultValue={service.name} />
+                          <input type="text" className="form-control" value={editingService.name} onChange={(e) => {
+                            setEditingService({...editingService, name: e.target.value});
+                          }} />
                         </td>
                         <td>
-                          <input type="text" className="form-control" defaultValue={service.name_ja} />
+                          <input type="text" className="form-control" value={editingService.name_ja} onChange={(e) => {
+                            setEditingService({...editingService, name_ja: e.target.value});
+                          }} />
                         </td>
                         <td>
-                          <input type="text" className="form-control" defaultValue={service.description} />
+                          <input type="text" className="form-control" value={editingService.description} onChange={(e) => {
+                            setEditingService({...editingService, description: e.target.value});
+                          }} />
                         </td>
-                        <td>{service.access_token}</td>
+                        <td>{editingService.access_token}</td>
                         <td>
-                          <button type="button" className="btn btn-outline-success btn-sm" onClick={saveService}>保存</button>
+                          <button type="button" className="btn btn-outline-success btn-sm" onClick={() => {
+                            saveService().then(() => {
+                              fetchServices();
+                            });
+                          }}>保存</button>
                         </td>
                       </tr>
                     }
