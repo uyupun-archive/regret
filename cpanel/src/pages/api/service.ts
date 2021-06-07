@@ -6,10 +6,17 @@ type Data = {
 };
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
-  if (req.method === 'POST') {
-    return await axios.post('http://localhost:1323/api/v0/service', req.body)
+  if (req.method === 'GET') {
+    await axios.get('http://localhost:1323/api/v0/service').then(_res => {
+      res.status(200).json(_res.data)
+    })
   }
-  res.status(200).json({ name: "test" })
+
+  if (req.method === 'POST') {
+    await axios.post('http://localhost:1323/api/v0/service', req.body).then(() => {
+      res.status(200).json({name: "test"})
+    })
+  }
 };
 
 export default handler;

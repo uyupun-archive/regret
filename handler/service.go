@@ -9,6 +9,14 @@ import (
 	"github.com/uyupun/regret/models"
 )
 
+func GetServices(c echo.Context) error {
+	services, err := query.GetServices()
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err)
+	}
+	return c.JSON(http.StatusOK, services)
+}
+
 func AddService(c echo.Context) error {
 	service := new(models.Service)
 	err := c.Bind(&service)
@@ -22,5 +30,5 @@ func AddService(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, err)
 	}
 
-	return c.JSON(http.StatusOK, "test")
+	return c.JSON(http.StatusOK, "{}")
 }

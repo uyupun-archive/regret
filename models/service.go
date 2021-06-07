@@ -7,9 +7,3 @@ type Service struct {
 	Description string `json:"description" yaml:"description"`
 	AccessToken string `json:"access_token" yaml:"accessToken"`
 }
-
-type AddService struct {
-	Name        string `json:"name" yaml:"name"`
-	NameJa      string `json:"name_ja" yaml:"nameJa"`
-	Description string `json:"description" yaml:"description"`
-}

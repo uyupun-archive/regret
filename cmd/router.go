@@ -13,6 +13,7 @@ func newRouter() *echo.Echo {
 	e.Use(middleware.Recover())
 
 	api := e.Group("/api/v0")
+	api.GET("/service", handler.GetServices)
 	api.POST("/service", handler.AddService)
 
 	return e

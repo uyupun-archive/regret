@@ -1,31 +1,22 @@
-import {useState, Fragment} from 'react';
+import {useState, useEffect, Fragment} from 'react';
 import axios from 'axios';
 import {Service, AddService, initService, initAddService} from '../models/service';
 
 const Index = () => {
-  const [services, setServices] = useState<Array<Service>>([
-    {
-      id: 1,
-      name: 'official',
-      name_ja: 'オフィシャル',
-      description: 'オフィシャルサイトです',
-      access_token: 'xxxxxxxxxxxxxxxxx'
-    },
-    {
-      id: 2,
-      name: 'takakeibo',
-      name_ja: 'たかしのカケイボ',
-      description: '家計簿アプリです',
-      access_token: 'xxxxxxxxxxxxxxxxx'
-    }
-  ]);
+  const [services, setServices] = useState<Array<Service>>([]);
 
   const [addingService, setAddingService] = useState<AddService>(initAddService());
   const [editingService, setEditingService] = useState<Service>(initService());
 
+  const fetchServices = () => {
+    axios.get('http://localhost:3000/api/service').then(res => {
+      setServices(res.data);
+    });
+  };
+
   const addService = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
-    const res = await axios.post('http://localhost:3000/api/service', addingService);
+    return await axios.post('http://localhost:3000/api/service', addingService);
   };
 
   const editService = (service: Service) => {
@@ -56,6 +47,8 @@ const Index = () => {
 
   };
 
+  useEffect(fetchServices, []);
+
   return (
     <div className="container">
       <div className="mt-4 mb-4 d-flex align-items-center">
@@ -64,7 +57,11 @@ const Index = () => {
       </div>
       <div className="mb-4">
         <h3>登録サービス一覧</h3>
-        <form className="row g-1 mb-2" onSubmit={addService}>
+        <form className="row g-1 mb-2" onSubmit={(e) => {
+          addService(e).then(() => {
+            fetchServices();
+          });
+        }}>
           <div className="col-3">
             <input type="text" className="form-control" placeholder="サービス名" onChange={(e) => {
               setAddingService({...addingService, name: e.target.value});
