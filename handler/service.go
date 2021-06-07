@@ -1,20 +1,26 @@
 package handler
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
+	"github.com/thanhpk/randstr"
+	"github.com/uyupun/regret/database"
 	"github.com/uyupun/regret/models"
 )
 
 func AddService(c echo.Context) error {
-	addService := new(models.AddService)
-	err := c.Bind(&addService)
+	service := new(models.Service)
+	err := c.Bind(&service)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, err)
 	}
-	fmt.Printf("%s\n", addService.Name)
-	// gormでDBに追加
+	service.AccessToken = randstr.String(20)
+
+	err = database.CreateService(*service)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err)
+	}
+
 	return c.JSON(http.StatusOK, "test")
 }

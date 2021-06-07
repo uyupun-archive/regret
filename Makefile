@@ -16,7 +16,7 @@ sh:
 	docker compose exec mysql bash
 
 migrate/up:
-	go run db/migrate.go up
+	go run database/migrations/migrate.go up
 
 migrate/down:
-	go run db/migrate.go down
+	go run database/migrations/migrate.go down
