@@ -83,64 +83,69 @@ const Index = () => {
             <button className="btn btn-outline-primary">追加</button>
           </div>
         </form>
-        <table className="table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>サービス名</th>
-              <th>サービス名（日本語）</th>
-              <th>備考</th>
-              <th>アクセストークン</th>
-              <th>操作</th>
-            </tr>
-          </thead>
-          <tbody>
-            {services.map((service, idx) => {
-              return (
-                <Fragment key={service.id}>
-                  {editingService.id !== service.id &&
-                    <tr>
-                      <td>{service.id}</td>
-                      <td>{service.name}</td>
-                      <td>{service.name_ja}</td>
-                      <td>{service.description}</td>
-                      <td>{service.access_token}</td>
-                      <td>
-                        <div className="d-flex justify-content-around">
-                          <button type="button" className="btn btn-outline-success btn-sm" onClick={() => editService(service)}>編集</button>
-                          <button type="button" className="btn btn-outline-danger btn-sm" onClick={() => {
-                            deleteService(service).then(() => {
-                              fetchServices();
-                            });
-                          }}>削除</button>
-                          <button type="button" className="btn btn-outline-dark btn-sm">開く</button>
-                        </div>
-                      </td>
-                    </tr>
-                  }
-                  {editingService.id === service.id &&
-                    <tr>
-                      <td>{service.id}</td>
-                      <td>
-                        <input type="text" className="form-control" defaultValue={service.name} />
-                      </td>
-                      <td>
-                        <input type="text" className="form-control" defaultValue={service.name_ja} />
-                      </td>
-                      <td>
-                        <input type="text" className="form-control" defaultValue={service.description} />
-                      </td>
-                      <td>{service.access_token}</td>
-                      <td>
-                        <button type="button" className="btn btn-outline-success btn-sm" onClick={saveService}>保存</button>
-                      </td>
-                    </tr>
-                  }
-                </Fragment>
-              )
-            })}
-          </tbody>
-        </table>
+        {services.length <= 0 && (
+          <p className="text-center h4 mt-4">サービスが登録されていません。</p>
+        )}
+        {services.length > 0 && (
+          <table className="table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>サービス名</th>
+                <th>サービス名（日本語）</th>
+                <th>備考</th>
+                <th>アクセストークン</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              {services.map((service, idx) => {
+                return (
+                  <Fragment key={service.id}>
+                    {editingService.id !== service.id &&
+                      <tr>
+                        <td>{service.id}</td>
+                        <td>{service.name}</td>
+                        <td>{service.name_ja}</td>
+                        <td>{service.description}</td>
+                        <td>{service.access_token}</td>
+                        <td>
+                          <div className="d-flex justify-content-around">
+                            <button type="button" className="btn btn-outline-success btn-sm" onClick={() => editService(service)}>編集</button>
+                            <button type="button" className="btn btn-outline-danger btn-sm" onClick={() => {
+                              deleteService(service).then(() => {
+                                fetchServices();
+                              });
+                            }}>削除</button>
+                            <button type="button" className="btn btn-outline-dark btn-sm">開く</button>
+                          </div>
+                        </td>
+                      </tr>
+                    }
+                    {editingService.id === service.id &&
+                      <tr>
+                        <td>{service.id}</td>
+                        <td>
+                          <input type="text" className="form-control" defaultValue={service.name} />
+                        </td>
+                        <td>
+                          <input type="text" className="form-control" defaultValue={service.name_ja} />
+                        </td>
+                        <td>
+                          <input type="text" className="form-control" defaultValue={service.description} />
+                        </td>
+                        <td>{service.access_token}</td>
+                        <td>
+                          <button type="button" className="btn btn-outline-success btn-sm" onClick={saveService}>保存</button>
+                        </td>
+                      </tr>
+                    }
+                  </Fragment>
+                )
+              })}
+            </tbody>
+          </table>
+        )}
       </div>
       <div>
         <h3>問い合わせカテゴリ一覧</h3>
