@@ -1,26 +1,10 @@
 package config
 
-import (
-	"github.com/spf13/viper"
-)
+import "github.com/joho/godotenv"
 
-type Config struct {
-	ListenAddress string `json:"listen_address" yaml:"listenAddress"`
-}
-
-func Load() (*Config, error) {
-	viper.SetConfigFile("./cmd/config/config.yml")
-
-	err := viper.ReadInConfig()
+func Load() {
+	err := godotenv.Load(".env")
 	if err != nil {
-		return nil, err
+		panic(err)
 	}
-
-	var config Config
-	err = viper.Unmarshal(&config)
-	if err != nil {
-		return nil, err
-	}
-
-	return &config, nil
 }

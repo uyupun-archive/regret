@@ -5,7 +5,6 @@ import (
 	"os"
 	"strings"
 
-	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
 )
 
@@ -32,10 +31,6 @@ func getClientAccessToken(authorization string) string {
 }
 
 func verifyAccessToken(clientAccessToken string) (bool, error) {
-	err := godotenv.Load(".env")
-	if err != nil {
-		return false, err
-	}
 	serverAccessToken := os.Getenv("ACCESS_TOKEN")
 
 	if clientAccessToken == serverAccessToken {

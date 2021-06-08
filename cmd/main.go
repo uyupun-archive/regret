@@ -1,16 +1,15 @@
 package main
 
 import (
+	"os"
+
 	"github.com/uyupun/regret/cmd/config"
 )
 
 func main() {
 	router := newRouter()
 
-	cfg, err := config.Load()
-	if err != nil {
-		panic(err)
-	}
+	config.Load()
 
-	router.Logger.Fatal(router.Start(":" + cfg.ListenAddress))
+	router.Logger.Fatal(router.Start(":" + os.Getenv("APP_PORT")))
 }
