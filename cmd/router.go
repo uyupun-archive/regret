@@ -4,6 +4,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/uyupun/regret/handler/admin"
+	myMiddleware "github.com/uyupun/regret/middleware"
 )
 
 func newRouter() *echo.Echo {
@@ -11,6 +12,7 @@ func newRouter() *echo.Echo {
 
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
+	e.Use(myMiddleware.TokenVerification)
 
 	apiVersion := "/api/v0"
 	adminApi := e.Group(apiVersion + "/admin")
