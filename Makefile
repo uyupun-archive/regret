@@ -1,6 +1,7 @@
 init:
 	cp .env.example .env
 	go install github.com/cespare/reflex
+	make key
 
 db:
 	docker-compose up -d
@@ -24,3 +25,6 @@ migrate/down:
 migrate/fresh:
 	make migrate/down
 	make migrate/up
+
+key:
+	go run access_token_generator.go
