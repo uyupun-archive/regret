@@ -1,7 +1,7 @@
 import {useState, useEffect, Fragment} from 'react';
 import axios from 'axios';
 import {Service, AddService, initService, initAddService} from '../models/service';
-import {AddCategory, Category, initAddCategory} from '../models/category';
+import {Category, AddCategory, initCategory, initAddCategory} from '../models/category';
 
 const Index = () => {
   const apiEndpoint = process.env.NEXT_PUBLIC_API_ENDPOINT;
@@ -13,6 +13,7 @@ const Index = () => {
 
   const [categories, setCategories] = useState<Array<Category>>([]);
   const [addingCategory, setAddingCategory] = useState<AddCategory>(initAddCategory());
+  const [editingCategory, setEditingCategory] = useState<Category>(initCategory());
 
   const fetchServices = () => {
     axios.get(`${apiEndpoint}/service`).then(res => {
@@ -59,8 +60,8 @@ const Index = () => {
     return axios.post(`${apiEndpoint}/category`, addingCategory);
   };
 
-  const editCategory = () => {
-
+  const editCategory = (category: Category) => {
+    setEditingCategory(category);
   };
 
   const deleteCategory = async (category: Category) => {
@@ -68,7 +69,7 @@ const Index = () => {
   };
 
   const saveCategory = () => {
-
+    setEditingCategory(initCategory());
   };
 
   useEffect(fetchServices, []);
@@ -225,19 +226,43 @@ const Index = () => {
               <tbody>
                 {categories.map(category => {
                   return (
-                    <tr key={category.id}>
-                      <td>{category.id}</td>
-                      <td>{category.name}</td>
-                      <td>{category.name_ja}</td>
-                      <td>
-                        <button type="button" className="btn btn-outline-success btn-sm me-1">編集</button>
-                        <button type="button" className="btn btn-outline-danger btn-sm" onClick={() => {
-                          deleteCategory(category).then(() => {
-                            fetchCategories(openedService.id);
-                          });
-                        }}>削除</button>
-                      </td>
-                    </tr>
+                    <Fragment key={category.id}>
+                      {editingCategory.id !== category.id &&
+                          <tr>
+                          <td>{category.id}</td>
+                          <td>{category.name}</td>
+                          <td>{category.name_ja}</td>
+                          <td>
+                            <button type="button" className="btn btn-outline-success btn-sm me-1" onClick={() => editCategory(category)}>編集</button>
+                            <button type="button" className="btn btn-outline-danger btn-sm" onClick={() => {
+                              deleteCategory(category).then(() => {
+                                fetchCategories(openedService.id);
+                              });
+                            }}>削除</button>
+                          </td>
+                        </tr>
+                      }
+                      {editingCategory.id === category.id &&
+                        <tr>
+                          <td>{editingCategory.id}</td>
+                          <td>
+                            <input type="text" className="form-control" value={editingCategory.name} onChange={(e) => {
+                              setEditingCategory({...editingCategory, name: e.target.value});
+                            }} />
+                          </td>
+                          <td>
+                            <input type="text" className="form-control" value={editingCategory.name_ja} onChange={(e) => {
+                              setEditingCategory({...editingCategory, name_ja: e.target.value});
+                            }} />
+                          </td>
+                          <td>
+                            <button type="button" className="btn btn-outline-success btn-sm" onClick={() => {
+                              saveCategory();
+                            }}>保存</button>
+                          </td>
+                        </tr>
+                      }
+                    </Fragment>
                   )
                 })}
               </tbody>
