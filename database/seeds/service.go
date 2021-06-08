@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/uyupun/regret/database"
 	"github.com/uyupun/regret/models"
 )
@@ -19,4 +21,6 @@ func SeedService() {
 		panic(err)
 	}
 	db.Create(&service)
+
+	fmt.Println("Service seeding succeeded!")
 }

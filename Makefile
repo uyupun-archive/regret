@@ -29,5 +29,9 @@ seed:
 	make migrate/fresh
 	go run database/seeds/*.go
 
+test:
+	make seed
+	go run tests/inquiry.go
+
 key:
 	go run app_key_generator.go

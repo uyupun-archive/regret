@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/uyupun/regret/database"
 	"github.com/uyupun/regret/models"
 )
@@ -18,4 +20,6 @@ func SeedCategory() {
 		panic(err)
 	}
 	db.Create(&category)
+
+	fmt.Println("Category seeding succeeded!")
 }

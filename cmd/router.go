@@ -16,7 +16,7 @@ func newRouter() *echo.Echo {
 
 	apiVersion := "/api/v0"
 	adminApi := e.Group(apiVersion+"/admin", myMiddleware.AppKeyVerification)
-	generalApi := e.Group(apiVersion)
+	generalApi := e.Group(apiVersion, myMiddleware.AccessTokenVerification)
 
 	registerAdminRoutes(*adminApi)
 	registerGeneralRoutes(*generalApi)

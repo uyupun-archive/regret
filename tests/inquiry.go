@@ -52,7 +52,7 @@ func createRequest(apiEndpoint string, reqBody *bytes.Reader) *http.Request {
 		panic(err)
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", "Bearer hogehoge")
+	req.Header.Set("Authorization", "Bearer testtest")
 	return req
 }
 

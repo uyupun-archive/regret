@@ -15,6 +15,16 @@ func GetServices() ([]models.Service, error) {
 	return services, nil
 }
 
+func GetServiceByAccessToken(accessToken string) (models.Service, error) {
+	service := models.Service{}
+	db, err := database.ConnectGorm()
+	if err != nil {
+		return service, err
+	}
+	db.First(&service, "access_token=?", accessToken)
+	return service, nil
+}
+
 func AddService(service models.Service) error {
 	db, err := database.ConnectGorm()
 	if err != nil {
