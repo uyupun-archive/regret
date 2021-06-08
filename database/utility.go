@@ -5,7 +5,22 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 )
+
+func ConnectGorm() (*gorm.DB, error) {
+	dsn, err := GetDSN()
+	if err != nil {
+		return nil, err
+	}
+
+	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	if err != nil {
+		return nil, err
+	}
+	return db, nil
+}
 
 func GetDSN() (string, error) {
 	err := godotenv.Load(".env")

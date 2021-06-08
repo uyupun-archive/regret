@@ -1,9 +1,12 @@
 package query
 
-import "github.com/uyupun/regret/models"
+import (
+	"github.com/uyupun/regret/database"
+	"github.com/uyupun/regret/models"
+)
 
 func GetCategories(serviceId int) ([]models.Category, error) {
-	db, err := connectGorm()
+	db, err := database.ConnectGorm()
 	if err != nil {
 		return nil, err
 	}
@@ -13,7 +16,7 @@ func GetCategories(serviceId int) ([]models.Category, error) {
 }
 
 func AddCategory(category models.Category) error {
-	db, err := connectGorm()
+	db, err := database.ConnectGorm()
 	if err != nil {
 		return err
 	}
@@ -22,7 +25,7 @@ func AddCategory(category models.Category) error {
 }
 
 func EditCategory(after models.Category) error {
-	db, err := connectGorm()
+	db, err := database.ConnectGorm()
 	if err != nil {
 		return err
 	}
@@ -35,7 +38,7 @@ func EditCategory(after models.Category) error {
 }
 
 func DeleteCategory(category models.Category) error {
-	db, err := connectGorm()
+	db, err := database.ConnectGorm()
 	if err != nil {
 		return err
 	}

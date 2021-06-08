@@ -1,11 +1,12 @@
 package query
 
 import (
+	"github.com/uyupun/regret/database"
 	"github.com/uyupun/regret/models"
 )
 
 func GetServices() ([]models.Service, error) {
-	db, err := connectGorm()
+	db, err := database.ConnectGorm()
 	if err != nil {
 		return nil, err
 	}
@@ -15,7 +16,7 @@ func GetServices() ([]models.Service, error) {
 }
 
 func AddService(service models.Service) error {
-	db, err := connectGorm()
+	db, err := database.ConnectGorm()
 	if err != nil {
 		return err
 	}
@@ -24,7 +25,7 @@ func AddService(service models.Service) error {
 }
 
 func EditService(after models.Service) error {
-	db, err := connectGorm()
+	db, err := database.ConnectGorm()
 	if err != nil {
 		return err
 	}
@@ -37,7 +38,7 @@ func EditService(after models.Service) error {
 }
 
 func DeleteService(service models.Service) error {
-	db, err := connectGorm()
+	db, err := database.ConnectGorm()
 	if err != nil {
 		return err
 	}

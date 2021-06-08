@@ -25,5 +25,9 @@ migrate/fresh:
 	make migrate/down
 	make migrate/up
 
+seed:
+	make migrate/fresh
+	go run database/seeds/*.go
+
 key:
 	go run app_key_generator.go
