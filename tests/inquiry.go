@@ -25,11 +25,15 @@ func main() {
 	}
 
 	apiEndpoint := "http://localhost:1323/api/v0/inquiry"
+	res := postInquiry(apiEndpoint, inquiry)
+	fmt.Println(res)
+}
+
+func postInquiry(apiEndpoint string, inquiry Inquiry) string {
 	reqBody := makeRequestBody(inquiry)
 	req := createRequest(apiEndpoint, reqBody)
-
-	res := postInquiry(req)
-	fmt.Println(res)
+	res := doRequest(req)
+	return res
 }
 
 func makeRequestBody(inquiry Inquiry) *bytes.Reader {
@@ -52,7 +56,7 @@ func createRequest(apiEndpoint string, reqBody *bytes.Reader) *http.Request {
 	return req
 }
 
-func postInquiry(req *http.Request) string {
+func doRequest(req *http.Request) string {
 	client := new(http.Client)
 	res, err := client.Do(req)
 	if err != nil {
