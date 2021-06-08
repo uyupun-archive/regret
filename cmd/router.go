@@ -3,7 +3,7 @@ package main
 import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	"github.com/uyupun/regret/handler"
+	"github.com/uyupun/regret/handler/admin"
 )
 
 func newRouter() *echo.Echo {
@@ -12,17 +12,28 @@ func newRouter() *echo.Echo {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
-	api := e.Group("/api/v0")
+	apiVersion := "/api/v0"
+	adminApi := e.Group(apiVersion + "/admin")
+	generalApi := e.Group(apiVersion)
 
-	api.GET("/service", handler.GetServices)
-	api.POST("/service", handler.AddService)
-	api.PATCH("/service", handler.EditService)
-	api.DELETE("/service", handler.DeleteService)
-
-	api.GET("/category", handler.GetCategories)
-	api.POST("/category", handler.AddCategory)
-	api.PATCH("/category", handler.EditCategory)
-	api.DELETE("/category", handler.DeleteCategory)
+	registerAdminRoutes(*adminApi)
+	registerGeneralRoutes(*generalApi)
 
 	return e
+}
+
+func registerAdminRoutes(adm echo.Group) {
+	adm.GET("/service", admin.GetServices)
+	adm.POST("/service", admin.AddService)
+	adm.PATCH("/service", admin.EditService)
+	adm.DELETE("/service", admin.DeleteService)
+
+	adm.GET("/category", admin.GetCategories)
+	adm.POST("/category", admin.AddCategory)
+	adm.PATCH("/category", admin.EditCategory)
+	adm.DELETE("/category", admin.DeleteCategory)
+}
+
+func registerGeneralRoutes(generalApi echo.Group) {
+	//
 }
