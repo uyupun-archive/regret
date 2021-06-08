@@ -63,8 +63,8 @@ const Index = () => {
 
   };
 
-  const deleteCategory = () => {
-
+  const deleteCategory = async (category: Category) => {
+    return await axios.delete(`${apiEndpoint}/category`, {data: category});
   };
 
   useEffect(fetchServices, []);
@@ -182,8 +182,13 @@ const Index = () => {
           <h4>▶ {openedService.id}: {openedService.name}({openedService.name_ja})</h4>
           <form className="row g-1 mb-2" onSubmit={(e) => {
             addCategory(e).then(() => {
-              fetchCategories(addingCategory.service_id);
-              setAddingCategory(initAddCategory());
+              const serviceId = addingCategory.service_id;
+              fetchCategories(serviceId);
+              setAddingCategory({
+                service_id: serviceId,
+                name: '',
+                name_ja: ''
+              });
             });
           }}>
             <div className="col-3">
@@ -217,8 +222,12 @@ const Index = () => {
                     <td>{category.name}</td>
                     <td>{category.name_ja}</td>
                     <td>
-                      <button type="button" className="btn btn-outline-success btn-sm">編集</button>
-                      <button type="button" className="btn btn-outline-danger btn-sm ms-1">削除</button>
+                      <button type="button" className="btn btn-outline-success btn-sm me-1">編集</button>
+                      <button type="button" className="btn btn-outline-danger btn-sm" onClick={() => {
+                        deleteCategory(category).then(() => {
+                          fetchCategories(addingCategory.service_id);
+                        });
+                      }}>削除</button>
                     </td>
                   </tr>
                 )

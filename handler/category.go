@@ -37,3 +37,18 @@ func AddCategory(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, "{}")
 }
+
+func DeleteCategory(c echo.Context) error {
+	category := new(models.Category)
+	err := c.Bind(&category)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, err)
+	}
+
+	err = query.DeleteCategory(*category)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err)
+	}
+
+	return c.JSON(http.StatusOK, "{}")
+}

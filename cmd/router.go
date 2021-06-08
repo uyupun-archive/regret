@@ -21,6 +21,7 @@ func newRouter() *echo.Echo {
 
 	api.GET("/category", handler.GetCategories)
 	api.POST("/category", handler.AddCategory)
+	api.DELETE("/category", handler.DeleteCategory)
 
 	return e
 }

@@ -20,3 +20,12 @@ func AddCategory(category models.Category) error {
 	db.Create(&category)
 	return nil
 }
+
+func DeleteCategory(category models.Category) error {
+	db, err := connectGorm()
+	if err != nil {
+		return err
+	}
+	db.Delete(&category)
+	return nil
+}
