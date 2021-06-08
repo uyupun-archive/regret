@@ -6,18 +6,13 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-)
 
-type Inquiry struct {
-	Title      string
-	Email      string
-	CategoryId int
-	Message    string
-}
+	"github.com/uyupun/regret/models"
+)
 
 func main() {
 
-	inquiry := Inquiry{
+	inquiry := models.Inquiry{
 		Title:      "問い合わせテスト",
 		Email:      "uyupun@gmail.com",
 		CategoryId: 1,
@@ -29,14 +24,14 @@ func main() {
 	fmt.Println(res)
 }
 
-func postInquiry(apiEndpoint string, inquiry Inquiry) string {
+func postInquiry(apiEndpoint string, inquiry models.Inquiry) string {
 	reqBody := makeRequestBody(inquiry)
 	req := createRequest(apiEndpoint, reqBody)
 	res := doRequest(req)
 	return res
 }
 
-func makeRequestBody(inquiry Inquiry) *bytes.Reader {
+func makeRequestBody(inquiry models.Inquiry) *bytes.Reader {
 	reqBodyBytes, err := json.Marshal(inquiry)
 	if err != nil {
 		panic(err)
