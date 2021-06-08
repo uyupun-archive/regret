@@ -2,7 +2,7 @@
 
 <img src="cpanel/public/logo.png" width="200px">
 
-問い合わせデータの集約・通知システム
+**IaaS = Inquiry as a Service**
 
 ### 環境構築（API）
 
