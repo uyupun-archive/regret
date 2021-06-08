@@ -1,7 +1,6 @@
 init:
 	cp .env.example .env
 	go install github.com/cespare/reflex
-	make key
 
 db:
 	docker-compose up -d
