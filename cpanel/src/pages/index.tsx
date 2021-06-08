@@ -68,8 +68,9 @@ const Index = () => {
     return await axios.delete(`${apiEndpoint}/category`, {data: category});
   };
 
-  const saveCategory = () => {
+  const saveCategory = async () => {
     setEditingCategory(initCategory());
+    return await axios.patch(`${apiEndpoint}/category`, editingCategory);
   };
 
   useEffect(fetchServices, []);
@@ -257,7 +258,9 @@ const Index = () => {
                           </td>
                           <td>
                             <button type="button" className="btn btn-outline-success btn-sm" onClick={() => {
-                              saveCategory();
+                              saveCategory().then(() => {
+                                fetchCategories(openedService.id);
+                              });
                             }}>保存</button>
                           </td>
                         </tr>

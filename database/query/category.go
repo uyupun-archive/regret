@@ -21,6 +21,19 @@ func AddCategory(category models.Category) error {
 	return nil
 }
 
+func EditCategory(after models.Category) error {
+	db, err := connectGorm()
+	if err != nil {
+		return err
+	}
+
+	before := models.Category{}
+	before.ID = after.ID
+	db.First(&before)
+	db.Model(&before).Updates(models.Category{Name: after.Name, NameJa: after.NameJa})
+	return nil
+}
+
 func DeleteCategory(category models.Category) error {
 	db, err := connectGorm()
 	if err != nil {
