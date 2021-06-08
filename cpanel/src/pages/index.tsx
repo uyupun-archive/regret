@@ -205,35 +205,40 @@ const Index = () => {
               <button className="btn btn-outline-primary">追加</button>
             </div>
           </form>
-          <table className="table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>カテゴリ名</th>
-                <th>カテゴリ名（日本語）</th>
-                <th>操作</th>
-              </tr>
-            </thead>
-            <tbody>
-              {categories.map(category => {
-                return (
-                  <tr key={category.id}>
-                    <td>{category.id}</td>
-                    <td>{category.name}</td>
-                    <td>{category.name_ja}</td>
-                    <td>
-                      <button type="button" className="btn btn-outline-success btn-sm me-1">編集</button>
-                      <button type="button" className="btn btn-outline-danger btn-sm" onClick={() => {
-                        deleteCategory(category).then(() => {
-                          fetchCategories(addingCategory.service_id);
-                        });
-                      }}>削除</button>
-                    </td>
-                  </tr>
-                )
-              })}
-            </tbody>
-          </table>
+          {categories.length <= 0 && (
+            <p className="text-center h4 mt-4">カテゴリが登録されていません。</p>
+          )}
+          {categories.length > 0 && (
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>カテゴリ名</th>
+                  <th>カテゴリ名（日本語）</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                {categories.map(category => {
+                  return (
+                    <tr key={category.id}>
+                      <td>{category.id}</td>
+                      <td>{category.name}</td>
+                      <td>{category.name_ja}</td>
+                      <td>
+                        <button type="button" className="btn btn-outline-success btn-sm me-1">編集</button>
+                        <button type="button" className="btn btn-outline-danger btn-sm" onClick={() => {
+                          deleteCategory(category).then(() => {
+                            fetchCategories(addingCategory.service_id);
+                          });
+                        }}>削除</button>
+                      </td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          )}
         </div>
       )}
     </div>
