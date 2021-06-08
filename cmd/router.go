@@ -4,6 +4,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/uyupun/regret/handler/admin"
+	"github.com/uyupun/regret/handler/general"
 	myMiddleware "github.com/uyupun/regret/middleware"
 )
 
@@ -14,18 +15,16 @@ func newRouter() *echo.Echo {
 	e.Use(middleware.Recover())
 
 	apiVersion := "/api/v0"
-	adminApi := e.Group(apiVersion + "/admin")
+	adminApi := e.Group(apiVersion+"/admin", myMiddleware.AppKeyVerification)
 	generalApi := e.Group(apiVersion)
 
-	registerAdminRoutes(*adminApi, e)
+	registerAdminRoutes(*adminApi)
 	registerGeneralRoutes(*generalApi)
 
 	return e
 }
 
-func registerAdminRoutes(adm echo.Group, e *echo.Echo) {
-	e.Use(myMiddleware.AppKeyVerification)
-
+func registerAdminRoutes(adm echo.Group) {
 	adm.GET("/service", admin.GetServices)
 	adm.POST("/service", admin.AddService)
 	adm.PATCH("/service", admin.EditService)
@@ -37,6 +36,6 @@ func registerAdminRoutes(adm echo.Group, e *echo.Echo) {
 	adm.DELETE("/category", admin.DeleteCategory)
 }
 
-func registerGeneralRoutes(generalApi echo.Group) {
-	//
+func registerGeneralRoutes(gen echo.Group) {
+	gen.POST("/inquiry", general.PostInquiry)
 }
