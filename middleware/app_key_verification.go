@@ -8,12 +8,12 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func TokenVerification(next echo.HandlerFunc) echo.HandlerFunc {
+func AppKeyVerification(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		authorization := c.Request().Header["Authorization"][0]
-		clientAccessToken := getClientAccessToken(authorization)
+		clientAppKey := getClientAppKey(authorization)
 
-		isCorrect, err := verifyAccessToken(clientAccessToken)
+		isCorrect, err := verifyAppKey(clientAppKey)
 		if err != nil {
 			return c.JSON(http.StatusInternalServerError, err)
 		}
@@ -24,16 +24,16 @@ func TokenVerification(next echo.HandlerFunc) echo.HandlerFunc {
 	}
 }
 
-func getClientAccessToken(authorization string) string {
+func getClientAppKey(authorization string) string {
 	ary := strings.Split(authorization, " ")
-	accessToken := ary[1]
-	return accessToken
+	appKey := ary[1]
+	return appKey
 }
 
-func verifyAccessToken(clientAccessToken string) (bool, error) {
-	serverAccessToken := os.Getenv("ACCESS_TOKEN")
+func verifyAppKey(clientAppKey string) (bool, error) {
+	serverAppKey := os.Getenv("APP_KEY")
 
-	if clientAccessToken == serverAccessToken {
+	if clientAppKey == serverAppKey {
 		return true, nil
 	}
 	return false, nil

@@ -12,19 +12,20 @@ func newRouter() *echo.Echo {
 
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
-	e.Use(myMiddleware.TokenVerification)
 
 	apiVersion := "/api/v0"
 	adminApi := e.Group(apiVersion + "/admin")
 	generalApi := e.Group(apiVersion)
 
-	registerAdminRoutes(*adminApi)
+	registerAdminRoutes(*adminApi, e)
 	registerGeneralRoutes(*generalApi)
 
 	return e
 }
 
-func registerAdminRoutes(adm echo.Group) {
+func registerAdminRoutes(adm echo.Group, e *echo.Echo) {
+	e.Use(myMiddleware.AppKeyVerification)
+
 	adm.GET("/service", admin.GetServices)
 	adm.POST("/service", admin.AddService)
 	adm.PATCH("/service", admin.EditService)

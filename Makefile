@@ -26,4 +26,4 @@ migrate/fresh:
 	make migrate/up
 
 key:
-	go run access_token_generator.go
+	go run app_key_generator.go
