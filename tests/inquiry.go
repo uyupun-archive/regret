@@ -1,17 +1,39 @@
 package main
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"strings"
 )
 
-func main() {
-	url := "http://localhost:1323/api/v0/inquiry"
+type Inquiry struct {
+	Message    string
+	CategoryId int
+}
 
-	reqBody := strings.NewReader("{}")
-	res, err := http.Post(url, "application/json", reqBody)
+func main() {
+	apiEndpoint := "http://localhost:1323/api/v0/inquiry"
+
+	inquiry := Inquiry{
+		Message:    "hogehoge",
+		CategoryId: 1,
+	}
+
+	reqBody, err := json.Marshal(inquiry)
+	if err != nil {
+		panic(err)
+	}
+	req, err := http.NewRequest("POST", apiEndpoint, bytes.NewReader(reqBody))
+	if err != nil {
+		panic(err)
+	}
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Authorization", "Bearer hogehoge")
+
+	client := new(http.Client)
+	res, err := client.Do(req)
 	if err != nil {
 		panic(err)
 	}
