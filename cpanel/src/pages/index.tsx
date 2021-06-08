@@ -1,7 +1,7 @@
 import {useState, useEffect, Fragment} from 'react';
 import axios from 'axios';
 import {Service, AddService, initService, initAddService} from '../models/service';
-import {Category} from '../models/category';
+import {AddCategory, Category, initAddCategory} from '../models/category';
 
 const Index = () => {
   const apiEndpoint = process.env.NEXT_PUBLIC_API_ENDPOINT;
@@ -12,6 +12,7 @@ const Index = () => {
   const [openedService, setOpenedService] = useState<Service | null>(null);
 
   const [categories, setCategories] = useState<Array<Category>>([]);
+  const [addingCategory, setAddingCategory] = useState<AddCategory>(initAddCategory());
 
   const fetchServices = () => {
     axios.get(`${apiEndpoint}/service`).then(res => {
@@ -34,6 +35,7 @@ const Index = () => {
 
   const openService = (service: Service) => {
     setOpenedService(service);
+    setAddingCategory({...addingCategory, service_id: service.id});
     fetchCategories(service.id);
   };
 
@@ -48,13 +50,13 @@ const Index = () => {
         service_id: serviceId
       }
     }).then(res => {
-      console.log(res);
       setCategories(res.data);
     });
   };
 
-  const addCategory = () => {
-
+  const addCategory = (e: { preventDefault: () => void; }) => {
+    e.preventDefault();
+    return axios.post(`${apiEndpoint}/category`, addingCategory);
   };
 
   const editCategory = () => {
@@ -178,12 +180,21 @@ const Index = () => {
         <div>
           <h3>問い合わせカテゴリ一覧</h3>
           <h4>▶ {openedService.id}: {openedService.name}({openedService.name_ja})</h4>
-          <form className="row g-1 mb-2">
+          <form className="row g-1 mb-2" onSubmit={(e) => {
+            addCategory(e).then(() => {
+              fetchCategories(addingCategory.service_id);
+              setAddingCategory(initAddCategory());
+            });
+          }}>
             <div className="col-3">
-              <input type="text" className="form-control" placeholder="カテゴリ名" />
+              <input type="text" className="form-control" placeholder="カテゴリ名" value={addingCategory.name} onChange={(e) => {
+                setAddingCategory({...addingCategory, name: e.target.value});
+              }} />
             </div>
             <div className="col-3">
-              <input type="text" className="form-control" placeholder="カテゴリ名（日本語）" />
+              <input type="text" className="form-control" placeholder="カテゴリ名（日本語）" value={addingCategory.name_ja} onChange={(e) => {
+                setAddingCategory({...addingCategory, name_ja: e.target.value});
+              }} />
             </div>
             <div className="col-2">
               <button className="btn btn-outline-primary">追加</button>
