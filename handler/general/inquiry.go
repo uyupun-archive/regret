@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"strconv"
 
 	"github.com/labstack/echo/v4"
 	"github.com/slack-go/slack"
@@ -18,7 +19,7 @@ func PostInquiry(c echo.Context) error {
 	}
 	fmt.Printf("%#v\n", inquiry)
 
-	err = postSlack()
+	err = postSlack(*inquiry)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err)
 	}
@@ -26,11 +27,33 @@ func PostInquiry(c echo.Context) error {
 	return c.JSON(http.StatusOK, "{}")
 }
 
-func postSlack() error {
-	token := os.Getenv("SLACK_OAUTH_TOKEN")
-	client := slack.New(token)
-	text := slack.MsgOptionText("Hello World", true)
-	channel := os.Getenv("SLACK_CHANNEL")
-	_, _, err := client.PostMessage("#"+channel, text)
+func postSlack(inquiry models.Inquiry) error {
+	url := os.Getenv("SLACK_INCOMING_WEBHOOK_URL")
+
+	title := makeSlackAttachment("タイトル", inquiry.Title)
+	email := makeSlackAttachment("メールアドレス", inquiry.Email)
+	category := makeSlackAttachment("カテゴリ", strconv.Itoa(inquiry.CategoryId))
+	message := makeSlackAttachment("本文", inquiry.Message)
+
+	err := slack.PostWebhook(url, &slack.WebhookMessage{
+		Username:  "test",
+		IconEmoji: ":rabbit:",
+		Text:      ":rabbit:問い合わせを受信したぺこ:rabbit2:",
+		Attachments: []slack.Attachment{
+			title,
+			email,
+			category,
+			message,
+		},
+	})
 	return err
+}
+
+func makeSlackAttachment(title string, value string) slack.Attachment {
+	titleField := slack.AttachmentField{Title: title + ":", Value: value}
+	attachment := slack.Attachment{}
+	attachment.Fields = []slack.AttachmentField{titleField}
+	color := "good"
+	attachment.Color = color
+	return attachment
 }
