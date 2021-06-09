@@ -30,9 +30,9 @@ func postSlack(inquiry models.Inquiry) error {
 	url := os.Getenv("SLACK_INCOMING_WEBHOOK_URL")
 
 	notify := makeSlackSectionBlock(":rabbit:問い合わせが届いたぺこ！:rabbit2:")
-	subject := makeSlackSectionBlock(fmt.Sprintf("> タイトル: %s", inquiry.Title))
+	subject := makeSlackSectionBlock(fmt.Sprintf("> 件名: %s", inquiry.Subject))
 	email := makeSlackSectionBlock(fmt.Sprintf("> メールアドレス: %s", inquiry.Email))
-	text := makeSlackSectionBlock(fmt.Sprintf("> 本文:\n> %s", inquiry.Message))
+	text := makeSlackSectionBlock(fmt.Sprintf("> 本文:\n> %s", inquiry.Text))
 
 	err := slack.PostWebhook(url, &slack.WebhookMessage{
 		Blocks: &slack.Blocks{

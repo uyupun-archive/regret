@@ -13,10 +13,10 @@ import (
 func main() {
 
 	inquiry := models.Inquiry{
-		Title:      "問い合わせテスト",
+		Subject:    "問い合わせテスト",
 		Email:      "uyupun@gmail.com",
 		CategoryId: 1,
-		Message:    "インターネットが壊れました。",
+		Text:       "インターネットが壊れました。",
 	}
 
 	apiEndpoint := "http://localhost:1323/api/v0/inquiry"

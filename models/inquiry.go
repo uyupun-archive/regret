@@ -1,8 +1,8 @@
 package models
 
 type Inquiry struct {
-	Title      string
+	Subject    string
 	Email      string
 	CategoryId int
-	Message    string
+	Text       string
 }
