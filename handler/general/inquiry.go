@@ -29,42 +29,32 @@ func PostInquiry(c echo.Context) error {
 func postSlack(inquiry models.Inquiry) error {
 	url := os.Getenv("SLACK_INCOMING_WEBHOOK_URL")
 
+	notify := makeSlackSectionBlock(":rabbit:問い合わせが届いたぺこ！:rabbit2:")
+	subject := makeSlackSectionBlock(fmt.Sprintf("> タイトル: %s", inquiry.Title))
+	email := makeSlackSectionBlock(fmt.Sprintf("> メールアドレス: %s", inquiry.Email))
+	text := makeSlackSectionBlock(fmt.Sprintf("> 本文:\n> %s", inquiry.Message))
+
 	err := slack.PostWebhook(url, &slack.WebhookMessage{
-		Text: ":rabbit:問い合わせを受信したぺこ:rabbit2:",
 		Blocks: &slack.Blocks{
 			BlockSet: []slack.Block{
 				slack.NewDividerBlock(),
-				&slack.SectionBlock{
-					Type: slack.MBTSection,
-					Text: &slack.TextBlockObject{
-						Type: "mrkdwn",
-						Text: ":rabbit:問い合わせが届いたぺこ！:rabbit2:",
-					},
-				},
-				&slack.SectionBlock{
-					Type: slack.MBTSection,
-					Text: &slack.TextBlockObject{
-						Type: "mrkdwn",
-						Text: fmt.Sprintf("> タイトル: %s", inquiry.Title),
-					},
-				},
-				&slack.SectionBlock{
-					Type: slack.MBTSection,
-					Text: &slack.TextBlockObject{
-						Type: "mrkdwn",
-						Text: fmt.Sprintf("> メールアドレス: %s", inquiry.Email),
-					},
-				},
-				&slack.SectionBlock{
-					Type: slack.MBTSection,
-					Text: &slack.TextBlockObject{
-						Type: "mrkdwn",
-						Text: fmt.Sprintf("> 本文:\n%s", inquiry.Message),
-					},
-				},
+				notify,
+				subject,
+				email,
+				text,
 				slack.NewDividerBlock(),
 			},
 		},
 	})
 	return err
+}
+
+func makeSlackSectionBlock(text string) *slack.SectionBlock {
+	return &slack.SectionBlock{
+		Type: slack.MBTSection,
+		Text: &slack.TextBlockObject{
+			Type: "mrkdwn",
+			Text: text,
+		},
+	}
 }
