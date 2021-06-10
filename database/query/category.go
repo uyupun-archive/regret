@@ -1,17 +1,37 @@
 package query
 
 import (
+	"fmt"
+
 	"github.com/uyupun/regret/database"
 	"github.com/uyupun/regret/models"
 )
 
-func GetCategories(serviceId int) ([]models.Category, error) {
+func GetCategoriesByServiceId(serviceId int) ([]models.Category, error) {
 	db, err := database.ConnectGorm()
 	if err != nil {
 		return nil, err
 	}
 	categories := []models.Category{}
 	db.Find(&categories, "service_id=?", serviceId)
+	return categories, nil
+}
+
+func GetCategoriesByAccessToken(accessToken string) ([]models.Category, error) {
+	db, err := database.ConnectGorm()
+	if err != nil {
+		return nil, err
+	}
+
+	service, err := GetServiceByAccessToken(accessToken)
+	if err != nil {
+		return nil, err
+	}
+
+	fmt.Printf("%#v\n", service)
+
+	categories := []models.Category{}
+	db.Find(&categories, "service_id=?", service.ID)
 	return categories, nil
 }
 

@@ -37,5 +37,6 @@ func registerAdminRoutes(adm echo.Group) {
 }
 
 func registerGeneralRoutes(gen echo.Group) {
+	gen.GET("/category", general.GetCategories)
 	gen.POST("/inquiry", general.PostInquiry)
 }

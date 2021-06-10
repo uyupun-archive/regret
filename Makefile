@@ -7,7 +7,7 @@ db:
 	make migrate/up
 
 api:
-	reflex -r '\.go|config.yml\z' -s -- sh -c 'go run cmd/main.go cmd/router.go'
+	reflex -r '\.go|config.yml\z' -s -- sh -c 'go run cmd/main.go cmd/config.go cmd/router.go'
 
 ps:
 	docker compose ps
@@ -29,9 +29,12 @@ seed:
 	make migrate/fresh
 	go run database/seeds/*.go
 
-test:
+test/inquiry:
 	make seed
-	go run tests/inquiry.go
+	go run tests/inquiry/main.go
+
+test/category:
+	go run tests/category/main.go
 
 key:
 	go run app_key_generator.go

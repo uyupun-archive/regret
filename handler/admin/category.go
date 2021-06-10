@@ -16,7 +16,7 @@ func GetCategories(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, err)
 	}
 
-	categories, err := query.GetCategories(tmpServiceId)
+	categories, err := query.GetCategoriesByServiceId(tmpServiceId)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err)
 	}
