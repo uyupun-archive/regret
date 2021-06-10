@@ -24,12 +24,3 @@ func getClientAccessToken(authorization string) string {
 	appKey := ary[1]
 	return appKey
 }
-
-func getServerAccessToken(clientAccessToken string) (string, error) {
-	service, err := query.GetServiceByAccessToken(clientAccessToken)
-	if err != nil {
-		return "", err
-	}
-	serverAccessToken := service.AccessToken
-	return serverAccessToken, nil
-}
