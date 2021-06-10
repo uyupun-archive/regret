@@ -7,6 +7,7 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/slack-go/slack"
+	"github.com/uyupun/regret/database/query"
 	"github.com/uyupun/regret/models"
 )
 
@@ -16,7 +17,6 @@ func PostInquiry(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, err)
 	}
-	fmt.Printf("%#v\n", inquiry)
 
 	err = postSlack(*inquiry)
 	if err != nil {
@@ -27,21 +27,28 @@ func PostInquiry(c echo.Context) error {
 }
 
 func postSlack(inquiry models.Inquiry) error {
+	category, err := query.GetCategoryById(inquiry.CategoryId)
+	if err != nil {
+		return err
+	}
+
 	url := os.Getenv("SLACK_INCOMING_WEBHOOK_URL")
 
-	notify := makeSlackSectionBlock(":rabbit:問い合わせが届いたぺこ！:rabbit2:")
-	subject := makeSlackSectionBlock(fmt.Sprintf("> 件名: %s", inquiry.Subject))
-	email := makeSlackSectionBlock(fmt.Sprintf("> メールアドレス: %s", inquiry.Email))
-	text := makeSlackSectionBlock(fmt.Sprintf("> 本文:\n> %s", inquiry.Text))
+	notifyBlock := makeSlackSectionBlock(":rabbit:問い合わせが届いたぺこ！:rabbit2:")
+	subjectBlock := makeSlackSectionBlock(fmt.Sprintf("> 件名: %s", inquiry.Subject))
+	emailBlock := makeSlackSectionBlock(fmt.Sprintf("> メールアドレス: %s", inquiry.Email))
+	categoryBlock := makeSlackSectionBlock(fmt.Sprintf("> カテゴリ: %s(%s)", category.Name, category.NameJa))
+	textBlock := makeSlackSectionBlock(fmt.Sprintf("> 本文:\n> %s", inquiry.Text))
 
-	err := slack.PostWebhook(url, &slack.WebhookMessage{
+	err = slack.PostWebhook(url, &slack.WebhookMessage{
 		Blocks: &slack.Blocks{
 			BlockSet: []slack.Block{
 				slack.NewDividerBlock(),
-				notify,
-				subject,
-				email,
-				text,
+				notifyBlock,
+				subjectBlock,
+				emailBlock,
+				categoryBlock,
+				textBlock,
 				slack.NewDividerBlock(),
 			},
 		},
