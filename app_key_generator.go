@@ -11,7 +11,7 @@ import (
 func main() {
 	appKey := generateAppKey()
 	setAppKey(".env", appKey)
-	setAppKey("cpanel/.env", appKey)
+	setAppKey("cpanel/.env.local", appKey)
 }
 
 func generateAppKey() string {
