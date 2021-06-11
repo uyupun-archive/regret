@@ -1,0 +1,18 @@
+up:
+    # hogehoge
+
+down:
+    # hogehoge
+
+migrate/up:
+	go run database/migrations/migrate.go up
+
+migrate/down:
+	go run database/migrations/migrate.go down
+
+migrate/fresh:
+	make migrate/down
+	make migrate/up
+
+key:
+	go run app_key_generator.go

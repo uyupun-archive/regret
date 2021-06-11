@@ -1,19 +1,10 @@
-init:
+deps:
 	cp .env.example .env
 	go install github.com/cespare/reflex
 
-db:
-	docker-compose up -d
-	make migrate/up
-
-api:
+dev:
+	-docker-compose up -d
 	reflex -r '\.go|config.yml\z' -s -- sh -c 'go run cmd/main.go cmd/config.go cmd/router.go'
-
-ps:
-	docker compose ps
-
-sh:
-	docker compose exec mysql bash
 
 migrate/up:
 	go run database/migrations/migrate.go up
@@ -26,7 +17,6 @@ migrate/fresh:
 	make migrate/up
 
 seed:
-	make migrate/fresh
 	go run database/seeds/*.go
 
 test/inquiry:

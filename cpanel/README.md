@@ -16,5 +16,4 @@ $ yarn dev  # localhost:3000
 $ cp .env.production.local.example .env.production.local
 $ make up
 $ make down
-$ make ps
 ```
