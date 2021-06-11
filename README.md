@@ -4,11 +4,13 @@
 
 **IaaS = Inquiry as a Service**
 
+---
+
 ## 構築手順
 
 ### 開発環境
 
-1. APP_KEYの生成
+#### 1. APP_KEYの生成
 
 - 管理用APIのアクセスに必要
 
@@ -17,7 +19,7 @@ $ cd cpanel && cp .env.local.example .env.local
 $ make key
 ```
 
-1. APIの環境構築
+#### 2. APIの環境構築
 
 - 開発環境にGo 1.16+がインストールされている前提
 
@@ -39,13 +41,15 @@ $ make test/category
 
 - その他のコマンドに関してはMakefileを参照
 
-1. コンパネの環境構築
+#### 3. コンパネの環境構築
 
 - コンパネの環境構築は [こちら](./cpanel/README.md) を参照
 
+---
+
 ### 本番環境
 
-1. APP_KEYの生成
+#### 1. APP_KEYの生成
 
 - 管理用APIのアクセスに必要
 
@@ -54,7 +58,7 @@ $ cd cpanel && cp .env.local.example .env.local
 $ make key
 ```
 
-1. APIの環境構築
+#### 2. APIの環境構築
 
 - 通常はGithub Actions経由で操作を行う
 - 基本的に初回構築時のみ、サーバ内で操作する
@@ -70,6 +74,6 @@ $ make migrate/fresh -f Makefile.prod
 
 - その他のコマンドに関してはMakefileを参照
 
-1. コンパネの環境構築
+#### 3. コンパネの環境構築
 
 - コンパネの環境構築は [こちら](./cpanel/README.md) を参照
