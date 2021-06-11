@@ -3,8 +3,9 @@
 ### 開発環境
 
 ```bash
-$ cp .env.local.example .env.local
-$ yarn dev  # localhost:3000
+# 開発用サーバの起動
+# localhost:3000
+$ yarn dev
 ```
 
 ### 本番環境
