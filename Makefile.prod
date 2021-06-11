@@ -1,18 +1,13 @@
+.PHONY: key
+
 up:
-    # hogehoge
+	-docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
 
 down:
-    # hogehoge
+	-docker compose down
 
 migrate/up:
 	go run database/migrations/migrate.go up
-
-migrate/down:
-	go run database/migrations/migrate.go down
-
-migrate/fresh:
-	make migrate/down
-	make migrate/up
 
 key:
 	go run app_key_generator.go

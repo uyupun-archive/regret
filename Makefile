@@ -1,5 +1,6 @@
+.PHONY: test/inquiry test/category key
+
 deps:
-	cp .env.example .env
 	go install github.com/cespare/reflex
 
 dev:

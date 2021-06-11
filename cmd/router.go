@@ -1,6 +1,8 @@
 package main
 
 import (
+	"net/http"
+
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/uyupun/regret/handler/admin"
@@ -13,6 +15,10 @@ func newRouter() *echo.Echo {
 
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
+
+	e.GET("/", func(c echo.Context) error {
+		return c.JSON(http.StatusOK, "Re:gret")
+	})
 
 	apiVersion := "/api/v0"
 	adminApi := e.Group(apiVersion+"/admin", myMiddleware.AppKeyVerification)

@@ -15,6 +15,8 @@
 - 管理用APIのアクセスに必要
 
 ```bash
+# 実行後、.envに適切な値を設定する
+$ cp .env.example .env
 $ cd cpanel && cp .env.local.example .env.local
 $ make key
 ```
@@ -25,7 +27,6 @@ $ make key
 
 ```bash
 # 初回のみ実行
-# 実行後、.envに適切な値を設定する
 $ make deps
 # 開発用サーバとDBの起動
 # localhost:1323で立ち上がる
@@ -54,6 +55,8 @@ $ make test/category
 - 管理用APIのアクセスに必要
 
 ```bash
+# 実行後、.envに適切な値を設定する
+$ cp .env.example .env
 $ cd cpanel && cp .env.local.example .env.local
 $ make key
 ```

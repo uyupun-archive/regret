@@ -1,16 +1,16 @@
 version: "3"
 
 services:
-  mysql:
-    container_name: regret_mysql
-    hostname: regret_mysql
+  db:
+    container_name: regret_db
+    hostname: regret_db
     image: mysql:8.0
     ports:
-      - ${DB_PORT}:3306
+      - ${DB_EXPOSE_PORT}:3306
     volumes:
-      - ./docker/mysql/data:/var/lib/mysql
-      - ./docker/mysql/logs:/var/log/mysql
-      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./docker/db/data:/var/lib/mysql
+      - ./docker/db/logs:/var/log/mysql
+      - ./docker/db/my.cnf:/etc/mysql/conf.d/my.cnf
     environment:
       MYSQL_DATABASE: ${DB_NAME}
       MYSQL_USER: ${DB_USERNAME}
