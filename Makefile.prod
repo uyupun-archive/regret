@@ -7,7 +7,7 @@ down:
 	-docker-compose down
 
 migrate/up:
-	docker exec -it regret_api ./migrate up
+	docker-compose exec db ./migrate up
 
 key:
 	./app_key_generator
