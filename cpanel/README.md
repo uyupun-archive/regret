@@ -4,6 +4,7 @@
 
 ```bash
 $ cp .env.local.example .env.local
+$ cp .env.production.local.example .env.production.local
 $ yarn dev  # localhost:3000
 ```
 
