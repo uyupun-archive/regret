@@ -32,7 +32,7 @@ $ make deps
 # localhost:1323で立ち上がる
 $ make dev
 # DBマイグレーションの実行
-$ make migrate/up
+$ make migrate/fresh
 # シーダーの実行
 $ make seed
 # 外部公開APIの疎通テスト
@@ -74,7 +74,7 @@ $ make up -f Makefile.prod
 # サーバとDBの終了
 $ make down -f Makefile.prod
 # DBマイグレーション
-$ make migrate/fresh -f Makefile.prod
+$ make migrate/up -f Makefile.prod
 ```
 
 - その他のコマンドに関してはMakefileを参照
