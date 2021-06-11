@@ -38,6 +38,8 @@ $ make seed
 # 外部公開APIの疎通テスト
 $ make test/inquiry
 $ make test/category
+# app_key_generator.goのクロスコンパイル
+$ make key/build
 ```
 
 - その他のコマンドに関してはMakefileを参照
@@ -58,7 +60,7 @@ $ make test/category
 # 実行後、.envに適切な値を設定する
 $ cp .env.example .env
 $ cd cpanel && cp .env.local.example .env.local
-$ make key
+$ make key -f Makefile.prod
 ```
 
 #### 2. APIの環境構築

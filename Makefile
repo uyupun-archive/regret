@@ -27,5 +27,8 @@ test/inquiry:
 test/category:
 	go run tests/category/main.go
 
+key/build:
+	CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build -o app_key_generator app_key_generator.go
+
 key:
 	go run app_key_generator.go
