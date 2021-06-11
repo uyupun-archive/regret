@@ -1,10 +1,10 @@
 .PHONY: key
 
 up:
-	-docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
+	-docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
 
 down:
-	-docker compose down
+	-docker-compose down
 
 migrate/up:
 	docker exec -it regret_api ./migrate up
