@@ -32,7 +32,7 @@ $ make deps
 # localhost:1323で立ち上がる
 $ make dev
 # DBマイグレーションの実行
-$ make migrate/fresh
+$ make migrate/up
 # シーダーの実行
 $ make seed
 # 外部公開APIの疎通テスト
