@@ -7,7 +7,7 @@ down:
 	-docker compose down
 
 migrate/up:
-	go run database/migrations/migrate.go up
+	docker exec -it regret_api ./migrate up
 
 key:
 	go run app_key_generator.go
