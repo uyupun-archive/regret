@@ -4,15 +4,17 @@
 
 ```bash
 $ cp .env.local.example .env.local
-$ cp .env.production.local.example .env.production.local
 $ yarn dev  # localhost:3000
 ```
 
 ### 本番環境
 
 - 通常はGithub Actions経由で操作を行う
+- 基本的に初回構築時のみ、サーバ内で操作する
 
 ```bash
+$ cp .env.production.local.example .env.production.local
 $ make up
 $ make down
+$ make ps
 ```
