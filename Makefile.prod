@@ -4,7 +4,7 @@ up:
 	-docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
 
 down:
-	-docker-compose down
+	-docker-compose -f docker-compose.yml -f docker-compose.prod.yml down
 
 migrate/up:
 	docker-compose exec db ./migrate up

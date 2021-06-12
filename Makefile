@@ -3,9 +3,12 @@
 deps:
 	go install github.com/cespare/reflex
 
-dev:
+up:
 	-docker-compose up -d
 	reflex -r '\.go|config.yml\z' -s -- sh -c 'go run cmd/main.go cmd/config.go cmd/router.go'
+
+down:
+	-docker-compose down
 
 migrate/up:
 	go run database/migrations/migrate.go up

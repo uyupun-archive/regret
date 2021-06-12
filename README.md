@@ -30,7 +30,9 @@ $ make key
 $ make deps
 # 開発用サーバとDBの起動
 # localhost:1323で立ち上がる
-$ make dev
+$ make up
+# 開発用サーバとDBの終了
+$ make down
 # DBマイグレーションの実行
 $ make migrate/fresh
 # シーダーの実行
