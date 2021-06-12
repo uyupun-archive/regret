@@ -1,7 +1,7 @@
 .PHONY: key
 
 up:
-	cdmod 777 /docker/db/logs
+	cdmod 777 ./docker/db/logs
 	-docker-compose -f docker-compose.yml -f docker-compose.prod.yml build --no-cahce
 	-docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
 
