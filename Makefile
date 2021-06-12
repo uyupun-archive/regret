@@ -11,7 +11,7 @@ down:
 	-docker-compose down
 
 ps:
-	-docker-compose -f docker-compose.yml -f docker-compose.prod.yml ps
+	-docker-compose ps
 
 migrate/up:
 	go run database/migrations/migrate.go up
