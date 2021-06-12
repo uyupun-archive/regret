@@ -1,7 +1,8 @@
 .PHONY: key
 
 up:
-	chmod 777 ./docker/db/logs
+	chmod -R 777 ./docker/db/logs
+	chmod -R 777 ./docker/db/data
 	-docker-compose -f docker-compose.yml -f docker-compose.prod.yml build --no-cache
 	-docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
 
