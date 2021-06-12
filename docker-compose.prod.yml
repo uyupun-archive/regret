@@ -6,7 +6,7 @@ services:
     hostname: regret_api
     build:
       context: .
-      dockerfile: ./docker/api/Dockerfile
+      dockerfile: ./docker/api/api.Dockerfile
     ports:
       - ${APP_EXPOSE_PORT}:${APP_PORT}
     restart: always
