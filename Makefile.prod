@@ -12,7 +12,7 @@ ps:
 	-docker-compose -f docker-compose.yml -f docker-compose.prod.yml ps
 
 migrate/up:
-	docker-compose exec db ./migrate up
+	docker-compose -f docker-compose.yml -f docker-compose.prod.yml exec api ./migrate up
 
 key:
 	./app_key_generator

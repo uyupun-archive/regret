@@ -11,5 +11,5 @@ WORKDIR /app/
 COPY --from=builder /go/src/regret/bin/regret .
 COPY --from=builder /go/src/regret/bin/migrate .
 COPY .env ./.env
-COPY ./database/migrations/ .
+COPY ./database/migrations/ ./database/migrations
 ENTRYPOINT ["./regret"]
