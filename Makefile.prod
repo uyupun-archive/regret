@@ -2,7 +2,6 @@
 
 up:
 	chmod 777 ./docker/db/logs
-	DOCKER_BUILDKIT=1
 	-docker-compose -f docker-compose.yml -f docker-compose.prod.yml build --no-cache
 	-docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
 
