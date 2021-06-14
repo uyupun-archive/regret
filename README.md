@@ -67,6 +67,7 @@ $ make key/build
 ```bash
 # 実行後、.envに適切な値を設定する
 $ cp .env.example .env
+# 実行後、.env.localに適切な値を設定する
 $ cd cpanel && cp .env.local.example .env.local
 $ make key -f Makefile.prod
 ```

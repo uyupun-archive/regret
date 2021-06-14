@@ -1,7 +1,7 @@
 .PHONY: up down ps
 
 up:
-	docker-compose build --no-cache
+	docker-compose --env-file ./.env.production build --no-cache
 	-docker-compose --env-file ./.env.production up -d
 
 ps:

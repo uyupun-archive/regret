@@ -14,6 +14,7 @@ $ yarn dev
 - 基本的に初回構築時のみ、サーバ内で操作する
 
 ```bash
+# 実行後、.envに適切な値を設定する
 $ cp .env.production.local.example .env.production.local
 $ make up
 $ make down
