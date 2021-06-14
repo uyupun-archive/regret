@@ -6,6 +6,12 @@
 
 ---
 
+## アーキテクチャ
+
+<img src="architecture.png" width="700px">
+
+---
+
 ## 構築手順
 
 ### 開発環境
