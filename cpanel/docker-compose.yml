@@ -23,6 +23,9 @@ services:
       - cpanel
 
   cpanel:
+    env_file:
+      - .env.local
+      - .env.production
     container_name: regret_cpanel
     hostname: regret_cpanel
     build:
