@@ -93,19 +93,23 @@ const Index = () => {
           onHide={handleCloseDeleteServiceModal}
           keyboard={false}
         >
-          <Modal.Header>
-            <Modal.Title>本当に削除しますか？</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>一度削除すると後から戻すことはできません。</Modal.Body>
-          <Modal.Footer>
-            <button className="btn btn-outline-secondary" onClick={handleCloseDeleteServiceModal}>いいえ、削除しません</button>
-            <button className="btn btn-outline-danger" onClick={() => {
-              deleteService(deletingService).then(() => {
-                fetchServices();
-                handleCloseDeleteServiceModal();
-              });
-            }}>はい、削除します</button>
-          </Modal.Footer>
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">本当に削除しますか？</h5>
+              </div>
+              <div className="modal-body">一度削除すると後から戻すことはできません。</div>
+              <div className="modal-footer">
+                <button className="btn btn-outline-secondary" onClick={handleCloseDeleteServiceModal}>いいえ、削除しません</button>
+                <button className="btn btn-outline-danger" onClick={() => {
+                  deleteService(deletingService).then(() => {
+                    fetchServices();
+                    handleCloseDeleteServiceModal();
+                  });
+                }}>はい、削除します</button>
+              </div>
+            </div>
+          </div>
         </Modal>
         <h3>登録サービス一覧</h3>
         <form className="row g-1 mb-2" onSubmit={(e) => {
