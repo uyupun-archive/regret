@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS categories(
     name_ja VARCHAR(20) NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY fk_service_id(service_id) REFERENCES services(id)
+    FOREIGN KEY fk_service_id(service_id) REFERENCES services(id) ON DELETE CASCADE
 );
 
 -- +migrate Down
