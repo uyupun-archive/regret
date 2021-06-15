@@ -37,6 +37,7 @@ const Index = () => {
   };
 
   const deleteService = async (service: Service) => {
+    if (service.id === openedService?.id) setOpenedService(null);
     return await axios.delete(`${apiEndpoint}/service`, {data: service});
   };
 
