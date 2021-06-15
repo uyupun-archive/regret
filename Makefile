@@ -1,4 +1,4 @@
-.PHONY: test/inquiry test/category key
+.PHONY: down ps test/inquiry test/category key
 
 deps:
 	go install github.com/cespare/reflex
@@ -27,14 +27,19 @@ seed:
 	go run database/seeds/*.go
 
 test/inquiry:
-	make seed
 	go run tests/inquiry/main.go
 
 test/category:
 	go run tests/category/main.go
 
-key/build:
-	CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build -o key/generator key/main.go
+test/build:
+	rm -rf tests/bin/category
+	rm -rf tests/bin/inquiry
+	GOOS=linux GOARCH=amd64 go build -ldflags '-X "main.ApiEndpoint=https://api.regret.uyupun.tech/api/v0/category"' -o tests/bin/category tests/category/main.go
+	GOOS=linux GOARCH=amd64 go build -ldflags '-X "main.ApiEndpoint=https://api.regret.uyupun.tech/api/v0/inquiry"' -o tests/bin/inquiry tests/inquiry/main.go
 
 key:
 	go run key/main.go
+
+key/build:
+	CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build -o key/generator key/main.go

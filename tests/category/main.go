@@ -6,9 +6,10 @@ import (
 	"net/http"
 )
 
+var ApiEndpoint = "http://localhost:1323/api/v0/category"
+
 func main() {
-	apiEndpoint := "http://localhost:1323/api/v0/category"
-	res := getCategories(apiEndpoint)
+	res := getCategories(ApiEndpoint)
 	fmt.Println(res)
 }
 

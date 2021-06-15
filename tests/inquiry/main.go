@@ -10,6 +10,8 @@ import (
 	"github.com/uyupun/regret/models"
 )
 
+var ApiEndpoint = "http://localhost:1323/api/v0/inquiry"
+
 func main() {
 
 	inquiry := models.Inquiry{
@@ -19,8 +21,7 @@ func main() {
 		Text:       "インターネットが壊れました。",
 	}
 
-	apiEndpoint := "http://localhost:1323/api/v0/inquiry"
-	res := postInquiry(apiEndpoint, inquiry)
+	res := postInquiry(ApiEndpoint, inquiry)
 	fmt.Println(res)
 }
 
