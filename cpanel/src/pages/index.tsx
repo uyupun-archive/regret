@@ -1,5 +1,5 @@
 import {useState, useEffect, Fragment} from 'react';
-import {Button, Modal} from 'react-bootstrap';
+import {Modal} from 'react-bootstrap';
 import axios from 'axios';
 import {Service, AddService, initService, initAddService} from '../models/service';
 import {Category, AddCategory, initCategory, initAddCategory} from '../models/category';
@@ -10,15 +10,16 @@ const Index = () => {
   const [services, setServices] = useState<Array<Service>>([]);
   const [addingService, setAddingService] = useState<AddService>(initAddService());
   const [editingService, setEditingService] = useState<Service>(initService());
+  const [deletingService, setDeletingService] = useState<Service>(initService());
   const [openedService, setOpenedService] = useState<Service | null>(null);
-  const [show, setShow] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const [categories, setCategories] = useState<Array<Category>>([]);
   const [addingCategory, setAddingCategory] = useState<AddCategory>(initAddCategory());
   const [editingCategory, setEditingCategory] = useState<Category>(initCategory());
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleCloseDeleteServiceModal = () => setShowDeleteModal(false);
+  const handleShowDeleteServiceModal = () => setShowDeleteModal(true);
 
   const fetchServices = () => {
     axios.get(`${apiEndpoint}/service`).then(res => {
@@ -88,8 +89,8 @@ const Index = () => {
       </div>
       <div className="mb-4">
         <Modal
-          show={show}
-          onHide={handleClose}
+          show={showDeleteModal}
+          onHide={handleCloseDeleteServiceModal}
           keyboard={false}
         >
           <Modal.Header>
@@ -97,8 +98,13 @@ const Index = () => {
           </Modal.Header>
           <Modal.Body>一度削除すると後から戻すことはできません。</Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>いいえ、削除しません</Button>
-            <Button variant="danger">はい、削除します</Button>
+            <button className="btn btn-outline-secondary" onClick={handleCloseDeleteServiceModal}>いいえ、削除しません</button>
+            <button className="btn btn-outline-danger" onClick={() => {
+              deleteService(deletingService).then(() => {
+                fetchServices();
+                handleCloseDeleteServiceModal();
+              });
+            }}>はい、削除します</button>
           </Modal.Footer>
         </Modal>
         <h3>登録サービス一覧</h3>
@@ -156,14 +162,10 @@ const Index = () => {
                         <td>
                           <div className="d-flex justify-content-around">
                             <button type="button" className="btn btn-outline-success btn-sm" onClick={() => editService(service)}>編集</button>
-                            {/* <button type="button" className="btn btn-outline-danger btn-sm" onClick={() => {
-                              deleteService(service).then(() => {
-                                fetchServices();
-                              });
-                            }}>削除</button> */}
-                            <button className="btn btn-outline-danger btn-sm" onClick={handleShow}>
-                              削除
-                            </button>
+                            <button type="button" className="btn btn-outline-danger btn-sm" onClick={() => {
+                              setDeletingService(service);
+                              handleShowDeleteServiceModal();
+                            }}>削除</button>
                             <button type="button" className="btn btn-outline-dark btn-sm" onClick={() => openService(service)}>開く</button>
                           </div>
                         </td>
