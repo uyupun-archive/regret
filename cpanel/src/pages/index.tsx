@@ -1,4 +1,5 @@
 import {useState, useEffect, Fragment} from 'react';
+import {Button, Modal} from 'react-bootstrap';
 import axios from 'axios';
 import {Service, AddService, initService, initAddService} from '../models/service';
 import {Category, AddCategory, initCategory, initAddCategory} from '../models/category';
@@ -10,10 +11,14 @@ const Index = () => {
   const [addingService, setAddingService] = useState<AddService>(initAddService());
   const [editingService, setEditingService] = useState<Service>(initService());
   const [openedService, setOpenedService] = useState<Service | null>(null);
+  const [show, setShow] = useState(false);
 
   const [categories, setCategories] = useState<Array<Category>>([]);
   const [addingCategory, setAddingCategory] = useState<AddCategory>(initAddCategory());
   const [editingCategory, setEditingCategory] = useState<Category>(initCategory());
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const fetchServices = () => {
     axios.get(`${apiEndpoint}/service`).then(res => {
@@ -82,6 +87,20 @@ const Index = () => {
         <h1 className="ms-2">{ process.env.NEXT_PUBLIC_APP_NAME } コントロールパネル</h1>
       </div>
       <div className="mb-4">
+        <Modal
+          show={show}
+          onHide={handleClose}
+          keyboard={false}
+        >
+          <Modal.Header>
+            <Modal.Title>本当に削除しますか？</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>一度削除すると後から戻すことはできません。</Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>いいえ、削除しません</Button>
+            <Button variant="danger">はい、削除します</Button>
+          </Modal.Footer>
+        </Modal>
         <h3>登録サービス一覧</h3>
         <form className="row g-1 mb-2" onSubmit={(e) => {
           addService(e).then(() => {
@@ -137,11 +156,14 @@ const Index = () => {
                         <td>
                           <div className="d-flex justify-content-around">
                             <button type="button" className="btn btn-outline-success btn-sm" onClick={() => editService(service)}>編集</button>
-                            <button type="button" className="btn btn-outline-danger btn-sm" onClick={() => {
+                            {/* <button type="button" className="btn btn-outline-danger btn-sm" onClick={() => {
                               deleteService(service).then(() => {
                                 fetchServices();
                               });
-                            }}>削除</button>
+                            }}>削除</button> */}
+                            <button className="btn btn-outline-danger btn-sm" onClick={handleShow}>
+                              削除
+                            </button>
                             <button type="button" className="btn btn-outline-dark btn-sm" onClick={() => openService(service)}>開く</button>
                           </div>
                         </td>
