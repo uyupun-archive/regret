@@ -88,29 +88,6 @@ const Index = () => {
         <h1 className="ms-2">{ process.env.NEXT_PUBLIC_APP_NAME } コントロールパネル</h1>
       </div>
       <div className="mb-4">
-        <Modal
-          show={showDeleteModal}
-          onHide={handleCloseDeleteServiceModal}
-          keyboard={false}
-        >
-          <div className="modal-dialog">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">本当に削除しますか？</h5>
-              </div>
-              <div className="modal-body">一度削除すると後から戻すことはできません。</div>
-              <div className="modal-footer">
-                <button className="btn btn-outline-secondary" onClick={handleCloseDeleteServiceModal}>いいえ、削除しません</button>
-                <button className="btn btn-outline-danger" onClick={() => {
-                  deleteService(deletingService).then(() => {
-                    fetchServices();
-                    handleCloseDeleteServiceModal();
-                  });
-                }}>はい、削除します</button>
-              </div>
-            </div>
-          </div>
-        </Modal>
         <h3>登録サービス一覧</h3>
         <form className="row g-1 mb-2" onSubmit={(e) => {
           addService(e).then(() => {
@@ -171,6 +148,25 @@ const Index = () => {
                               handleShowDeleteServiceModal();
                             }}>削除</button>
                             <button type="button" className="btn btn-outline-dark btn-sm" onClick={() => openService(service)}>開く</button>
+
+                            <Modal
+                              show={showDeleteModal}
+                              onHide={handleCloseDeleteServiceModal}
+                            >
+                              <div className="modal-header">
+                                <h5 className="modal-title">本当に削除しますか？</h5>
+                              </div>
+                              <div className="modal-body">一度削除すると後から戻すことはできません。</div>
+                              <div className="modal-footer">
+                                <button className="btn btn-outline-secondary" onClick={handleCloseDeleteServiceModal}>いいえ、削除しません</button>
+                                <button className="btn btn-outline-danger" onClick={() => {
+                                  deleteService(deletingService).then(() => {
+                                    fetchServices();
+                                    handleCloseDeleteServiceModal();
+                                  });
+                                }}>はい、削除します</button>
+                              </div>
+                            </Modal>
                           </div>
                         </td>
                       </tr>
