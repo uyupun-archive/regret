@@ -1,4 +1,4 @@
-.PHONY: key
+.PHONY: down ps key
 
 up:
 	chmod 777 ./docker/db/logs
