@@ -1,5 +1,7 @@
 # Re:gret
 
+[![Deploy](https://github.com/uyupun/regret/actions/workflows/main.yml/badge.svg)](https://github.com/uyupun/regret/actions/workflows/main.yml)
+
 <img src="cpanel/public/logo.png" width="200px">
 
 Re:gretはマネージドな問い合わせ受付・通知システムです。
