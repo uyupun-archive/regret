@@ -1,4 +1,4 @@
-.PHONY: down ps key
+.PHONY: down ps test/inquiry test/category key
 
 up:
 	chmod 777 ./docker/db/logs
@@ -13,6 +13,22 @@ ps:
 
 migrate/up:
 	docker-compose -f docker-compose.yml -f docker-compose.prod.yml exec api ./migrate up
+
+migrate/down:
+	docker-compose -f docker-compose.yml -f docker-compose.prod.yml exec api ./migrate down
+
+migrate/fresh:
+	make migrate/down
+	make migrate/up
+
+seed:
+	docker-compose -f docker-compose.yml -f docker-compose.prod.yml exec api ./seeder
+
+test/inquiry:
+	docker-compose -f docker-compose.yml -f docker-compose.prod.yml exec api ./inquiry
+
+test/category:
+	docker-compose -f docker-compose.yml -f docker-compose.prod.yml exec api ./category
 
 key:
 	./key/generator
