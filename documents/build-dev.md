@@ -43,6 +43,8 @@ $ make key/build
 
 ```bash
 $ cd cpanel
+# 依存パッケージのインストール
+$ yarn install
 # 開発用サーバの起動
 # localhost:3000で立ち上がる
 $ yarn dev
