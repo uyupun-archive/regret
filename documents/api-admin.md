@@ -1,5 +1,6 @@
 # 管理API仕様
 
+- コンパネが内部的に使用しているAPI
 - ベースパス: `/api/v0/admin`
 - BearerトークンにはAPP_KEYを含める
 
