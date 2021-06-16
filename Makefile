@@ -32,12 +32,6 @@ test/inquiry:
 test/category:
 	go run tests/category/main.go
 
-test/build:
-	rm -rf tests/bin/category
-	rm -rf tests/bin/inquiry
-	GOOS=linux GOARCH=amd64 go build -ldflags '-X "main.ApiEndpoint=https://api.regret.uyupun.tech/api/v0/category"' -o tests/bin/category tests/category/main.go
-	GOOS=linux GOARCH=amd64 go build -ldflags '-X "main.ApiEndpoint=https://api.regret.uyupun.tech/api/v0/inquiry"' -o tests/bin/inquiry tests/inquiry/main.go
-
 key:
 	go run key/main.go
 

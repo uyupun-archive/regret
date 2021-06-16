@@ -15,7 +15,8 @@ Re:gretはマネージドな問い合わせシステムです。
 ### ドキュメント
 
 - 開発者ガイド
-  - [環境構築](documents/build.md)
+  - [環境構築(開発環境)](documents/build-dev.md)
+  - [環境構築(本番環境)](documents/build-prod.md)
   - [管理API仕様](documents/api-admin.md)
 - 利用者ガイド
   - [コンパネ操作](documents/cpanel.md)
