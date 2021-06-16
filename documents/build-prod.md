@@ -22,9 +22,14 @@ $ make up -f Makefile.prod
 # サーバとDBの終了
 $ make down -f Makefile.prod
 # プロセスの確認
-$ make ps
-# DBマイグレーション
-$ make migrate/up -f Makefile.prod
+$ make ps -f Makefile.prod
+# DBマイグレーションの実行
+$ make migrate/fresh -f Makefile.prod
+# シーダーの実行
+$ make seed
+# 外部公開APIの疎通テスト
+$ make test/inquiry
+$ make test/category
 ```
 
 - その他のコマンドの詳細に関しては[Makefile](../Makefile)を参照
