@@ -210,7 +210,7 @@ const Index = () => {
       {openedService && (
         <>
           <h3>▶ {openedService.id}: {openedService.name}({openedService.name_ja})</h3>
-          <div>
+          <div className="mb-4">
             <h4>必須/任意項目切り替え</h4>
             <table className="table">
               <thead>
@@ -258,6 +258,7 @@ const Index = () => {
                 </tr>
               </tbody>
             </table>
+            <button type="button" className="btn btn-outline-success">保存</button>
           </div>
           <div>
             <h4>問い合わせカテゴリ一覧</h4>
