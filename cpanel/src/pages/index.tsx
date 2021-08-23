@@ -52,6 +52,10 @@ const Index = () => {
     return await axios.patch(`${apiEndpoint}/service`, editingService);
   };
 
+  const cancelEditService = () => {
+    setEditingService(initService());
+  };
+
   const fetchCategories = (serviceId: number) => {
     axios.get(`${apiEndpoint}/category`, {
       params: {
@@ -78,6 +82,10 @@ const Index = () => {
   const saveCategory = async () => {
     setEditingCategory(initCategory());
     return await axios.patch(`${apiEndpoint}/category`, editingCategory);
+  };
+
+  const cancelEditCategory = () => {
+    setEditingCategory(initCategory());
   };
 
   useEffect(fetchServices, []);
@@ -192,11 +200,16 @@ const Index = () => {
                         </td>
                         <td>{editingService.access_token}</td>
                         <td>
-                          <button type="button" className="btn btn-outline-success btn-sm" onClick={() => {
-                            saveService().then(() => {
-                              fetchServices();
-                            });
-                          }}>保存</button>
+                          <div className="d-flex justify-content-around">
+                            <button type="button" className="btn btn-outline-success btn-sm" onClick={() => {
+                              saveService().then(() => {
+                                fetchServices();
+                              });
+                            }}>保存</button>
+                            <button type="button" className="btn btn-outline-warning btn-sm" onClick={() => {
+                              cancelEditService();
+                            }}>キャンセル</button>
+                          </div>
                         </td>
                       </tr>
                     }
@@ -333,11 +346,14 @@ const Index = () => {
                               }} />
                             </td>
                             <td>
-                              <button type="button" className="btn btn-outline-success btn-sm" onClick={() => {
+                              <button type="button" className="btn btn-outline-success btn-sm me-1" onClick={() => {
                                 saveCategory().then(() => {
                                   fetchCategories(openedService.id);
                                 });
                               }}>保存</button>
+                              <button type="button" className="btn btn-outline-warning btn-sm" onClick={() => {
+                                cancelEditCategory();
+                              }}>キャンセル</button>
                             </td>
                           </tr>
                         }
