@@ -208,95 +208,146 @@ const Index = () => {
         )}
       </div>
       {openedService && (
-        <div>
-          <h3>問い合わせカテゴリ一覧</h3>
-          <h4>▶ {openedService.id}: {openedService.name}({openedService.name_ja})</h4>
-          <form className="row g-1 mb-2" onSubmit={(e) => {
-            addCategory(e).then(() => {
-              const serviceId = openedService.id;
-              fetchCategories(serviceId);
-              setAddingCategory({
-                service_id: openedService.id,
-                name: '',
-                name_ja: ''
-              });
-            });
-          }}>
-            <div className="col-3">
-              <input type="text" className="form-control" placeholder="カテゴリ名" value={addingCategory.name} onChange={(e) => {
-                setAddingCategory({...addingCategory, name: e.target.value});
-              }} />
-            </div>
-            <div className="col-3">
-              <input type="text" className="form-control" placeholder="カテゴリ名（日本語）" value={addingCategory.name_ja} onChange={(e) => {
-                setAddingCategory({...addingCategory, name_ja: e.target.value});
-              }} />
-            </div>
-            <div className="col-2">
-              <button className="btn btn-outline-primary">追加</button>
-            </div>
-          </form>
-          {categories.length <= 0 && (
-            <p className="text-center h4 mt-4">カテゴリが登録されていません。</p>
-          )}
-          {categories.length > 0 && (
+        <>
+          <h3>▶ {openedService.id}: {openedService.name}({openedService.name_ja})</h3>
+          <div>
+            <h4>必須/任意項目切り替え</h4>
             <table className="table">
               <thead>
                 <tr>
-                  <th>ID</th>
-                  <th>カテゴリ名</th>
-                  <th>カテゴリ名（日本語）</th>
-                  <th>操作</th>
+                  <th>項目名</th>
+                  <th>必須/任意</th>
                 </tr>
               </thead>
               <tbody>
-                {categories.map(category => {
-                  return (
-                    <Fragment key={category.id}>
-                      {editingCategory.id !== category.id &&
-                          <tr>
-                          <td>{category.id}</td>
-                          <td>{category.name}</td>
-                          <td>{category.name_ja}</td>
-                          <td>
-                            <button type="button" className="btn btn-outline-success btn-sm me-1" onClick={() => editCategory(category)}>編集</button>
-                            <button type="button" className="btn btn-outline-danger btn-sm" onClick={() => {
-                              deleteCategory(category).then(() => {
-                                fetchCategories(openedService.id);
-                              });
-                            }}>削除</button>
-                          </td>
-                        </tr>
-                      }
-                      {editingCategory.id === category.id &&
-                        <tr>
-                          <td>{editingCategory.id}</td>
-                          <td>
-                            <input type="text" className="form-control" value={editingCategory.name} onChange={(e) => {
-                              setEditingCategory({...editingCategory, name: e.target.value});
-                            }} />
-                          </td>
-                          <td>
-                            <input type="text" className="form-control" value={editingCategory.name_ja} onChange={(e) => {
-                              setEditingCategory({...editingCategory, name_ja: e.target.value});
-                            }} />
-                          </td>
-                          <td>
-                            <button type="button" className="btn btn-outline-success btn-sm" onClick={() => {
-                              saveCategory().then(() => {
-                                fetchCategories(openedService.id);
-                              });
-                            }}>保存</button>
-                          </td>
-                        </tr>
-                      }
-                    </Fragment>
-                  )
-                })}
+                <tr>
+                  <td>件名</td>
+                  <td>
+                    <select className="form-select">
+                      <option>必須</option>
+                      <option>任意</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>メールアドレス</td>
+                  <td>
+                    <select className="form-select">
+                      <option>必須</option>
+                      <option>任意</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>カテゴリ</td>
+                  <td>
+                    <select className="form-select">
+                      <option>必須</option>
+                      <option>任意</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>本文</td>
+                  <td>
+                    <select className="form-select">
+                      <option>必須</option>
+                      <option>任意</option>
+                    </select>
+                  </td>
+                </tr>
               </tbody>
             </table>
-          )}
-        </div>
+          </div>
+          <div>
+            <h4>問い合わせカテゴリ一覧</h4>
+            <form className="row g-1 mb-2" onSubmit={(e) => {
+              addCategory(e).then(() => {
+                const serviceId = openedService.id;
+                fetchCategories(serviceId);
+                setAddingCategory({
+                  service_id: openedService.id,
+                  name: '',
+                  name_ja: ''
+                });
+              });
+            }}>
+              <div className="col-3">
+                <input type="text" className="form-control" placeholder="カテゴリ名" value={addingCategory.name} onChange={(e) => {
+                  setAddingCategory({...addingCategory, name: e.target.value});
+                }} />
+              </div>
+              <div className="col-3">
+                <input type="text" className="form-control" placeholder="カテゴリ名（日本語）" value={addingCategory.name_ja} onChange={(e) => {
+                  setAddingCategory({...addingCategory, name_ja: e.target.value});
+                }} />
+              </div>
+              <div className="col-2">
+                <button className="btn btn-outline-primary">追加</button>
+              </div>
+            </form>
+            {categories.length <= 0 && (
+              <p className="text-center h4 mt-4">カテゴリが登録されていません。</p>
+            )}
+            {categories.length > 0 && (
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>カテゴリ名</th>
+                    <th>カテゴリ名（日本語）</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {categories.map(category => {
+                    return (
+                      <Fragment key={category.id}>
+                        {editingCategory.id !== category.id &&
+                            <tr>
+                            <td>{category.id}</td>
+                            <td>{category.name}</td>
+                            <td>{category.name_ja}</td>
+                            <td>
+                              <button type="button" className="btn btn-outline-success btn-sm me-1" onClick={() => editCategory(category)}>編集</button>
+                              <button type="button" className="btn btn-outline-danger btn-sm" onClick={() => {
+                                deleteCategory(category).then(() => {
+                                  fetchCategories(openedService.id);
+                                });
+                              }}>削除</button>
+                            </td>
+                          </tr>
+                        }
+                        {editingCategory.id === category.id &&
+                          <tr>
+                            <td>{editingCategory.id}</td>
+                            <td>
+                              <input type="text" className="form-control" value={editingCategory.name} onChange={(e) => {
+                                setEditingCategory({...editingCategory, name: e.target.value});
+                              }} />
+                            </td>
+                            <td>
+                              <input type="text" className="form-control" value={editingCategory.name_ja} onChange={(e) => {
+                                setEditingCategory({...editingCategory, name_ja: e.target.value});
+                              }} />
+                            </td>
+                            <td>
+                              <button type="button" className="btn btn-outline-success btn-sm" onClick={() => {
+                                saveCategory().then(() => {
+                                  fetchCategories(openedService.id);
+                                });
+                              }}>保存</button>
+                            </td>
+                          </tr>
+                        }
+                      </Fragment>
+                    )
+                  })}
+                </tbody>
+              </table>
+            )}
+          </div>
+        </>
       )}
     </div>
   )
