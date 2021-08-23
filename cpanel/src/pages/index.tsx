@@ -271,7 +271,9 @@ const Index = () => {
                 </tr>
               </tbody>
             </table>
-            <button type="button" className="btn btn-outline-success">保存</button>
+            <div className="text-end">
+              <button type="button" className="btn btn-outline-success">保存</button>
+            </div>
           </div>
           <div>
             <h4>問い合わせカテゴリ一覧</h4>
