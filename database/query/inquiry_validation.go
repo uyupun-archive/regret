@@ -15,3 +15,13 @@ func AddInquiryValidation(serviceId int) error {
 	db.Create(&inquiryValidation)
 	return nil
 }
+
+func GetInquiryValidationByServiceId(serviceId int) (models.InquiryValidation, error) {
+	inquiryValidation := models.InquiryValidation{}
+	db, err := database.ConnectGorm()
+	if err != nil {
+		return inquiryValidation, err
+	}
+	db.First(&inquiryValidation, "service_id=?", serviceId)
+	return inquiryValidation, nil
+}

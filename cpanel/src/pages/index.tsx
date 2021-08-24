@@ -2,6 +2,7 @@ import {useState, useEffect, Fragment} from 'react';
 import {Modal} from 'react-bootstrap';
 import axios from 'axios';
 import {Service, AddService, initService, initAddService} from '../models/service';
+import {InquiryValidation, initInquiryValidation} from '../models/inquiry-validation';
 import {Category, AddCategory, initCategory, initAddCategory} from '../models/category';
 
 const Index = () => {
@@ -13,6 +14,8 @@ const Index = () => {
   const [deletingService, setDeletingService] = useState<Service>(initService());
   const [openedService, setOpenedService] = useState<Service | null>(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+  const [inquiryValidation, setInquiryValidation] = useState<InquiryValidation>(initInquiryValidation());
 
   const [categories, setCategories] = useState<Array<Category>>([]);
   const [addingCategory, setAddingCategory] = useState<AddCategory>(initAddCategory());
@@ -44,6 +47,7 @@ const Index = () => {
   const openService = (service: Service) => {
     setOpenedService(service);
     setAddingCategory({...addingCategory, service_id: service.id});
+    fetchInquiryValidation(service.id);
     fetchCategories(service.id);
   };
 
@@ -54,6 +58,17 @@ const Index = () => {
 
   const cancelEditService = () => {
     setEditingService(initService());
+  };
+
+  const fetchInquiryValidation = (serviceId: number) => {
+    axios.get(`${apiEndpoint}/inquiry-validation`, {
+      params: {
+        service_id: serviceId
+      }
+    }).then(res => {
+      setInquiryValidation(res.data);
+      console.log(inquiryValidation)
+    });
   };
 
   const fetchCategories = (serviceId: number) => {
@@ -206,9 +221,7 @@ const Index = () => {
                                 fetchServices();
                               });
                             }}>保存</button>
-                            <button type="button" className="btn btn-outline-warning btn-sm" onClick={() => {
-                              cancelEditService();
-                            }}>キャンセル</button>
+                            <button type="button" className="btn btn-outline-warning btn-sm" onClick={cancelEditService}>キャンセル</button>
                           </div>
                         </td>
                       </tr>
@@ -229,44 +242,40 @@ const Index = () => {
               <thead>
                 <tr>
                   <th>項目名</th>
-                  <th>必須/任意</th>
+                  <th>必須</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td>件名</td>
                   <td>
-                    <select className="form-select">
-                      <option>必須</option>
-                      <option>任意</option>
-                    </select>
+                    <input type="checkbox" checked={inquiryValidation.is_required_subject} onChange={() => {
+                      setInquiryValidation({...inquiryValidation, is_required_subject: !inquiryValidation.is_required_subject});
+                    }} />
                   </td>
                 </tr>
                 <tr>
                   <td>メールアドレス</td>
                   <td>
-                    <select className="form-select">
-                      <option>必須</option>
-                      <option>任意</option>
-                    </select>
+                    <input type="checkbox" checked={inquiryValidation.is_required_email} onChange={() => {
+                      setInquiryValidation({...inquiryValidation, is_required_email: !inquiryValidation.is_required_email});
+                    }} />
                   </td>
                 </tr>
                 <tr>
                   <td>カテゴリ</td>
                   <td>
-                    <select className="form-select">
-                      <option>必須</option>
-                      <option>任意</option>
-                    </select>
+                    <input type="checkbox" checked={inquiryValidation.is_required_category} onChange={() => {
+                      setInquiryValidation({...inquiryValidation, is_required_category: !inquiryValidation.is_required_category});
+                    }} />
                   </td>
                 </tr>
                 <tr>
                   <td>本文</td>
                   <td>
-                    <select className="form-select">
-                      <option>必須</option>
-                      <option>任意</option>
-                    </select>
+                    <input type="checkbox" checked={inquiryValidation.is_required_text} onChange={() => {
+                      setInquiryValidation({...inquiryValidation, is_required_text: !inquiryValidation.is_required_text});
+                    }} />
                   </td>
                 </tr>
               </tbody>
@@ -353,9 +362,7 @@ const Index = () => {
                                   fetchCategories(openedService.id);
                                 });
                               }}>保存</button>
-                              <button type="button" className="btn btn-outline-warning btn-sm" onClick={() => {
-                                cancelEditCategory();
-                              }}>キャンセル</button>
+                              <button type="button" className="btn btn-outline-warning btn-sm" onClick={cancelEditCategory}>キャンセル</button>
                             </td>
                           </tr>
                         }
