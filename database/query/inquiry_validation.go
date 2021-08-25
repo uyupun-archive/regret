@@ -25,3 +25,16 @@ func GetInquiryValidationByServiceId(serviceId int) (models.InquiryValidation, e
 	db.First(&inquiryValidation, "service_id=?", serviceId)
 	return inquiryValidation, nil
 }
+
+func EditInquiryValidation(after models.InquiryValidation) error {
+	db, err := database.ConnectGorm()
+	if err != nil {
+		return err
+	}
+
+	before := models.InquiryValidation{}
+	before.ID = after.ID
+	db.First(&before)
+	db.Model(&before).Updates(map[string]interface{}{"IsRequiredSubject": after.IsRequiredSubject, "IsRequiredEmail": after.IsRequiredEmail, "IsRequiredCategory": after.IsRequiredCategory, "IsRequiredText": after.IsRequiredText})
+	return nil
+}

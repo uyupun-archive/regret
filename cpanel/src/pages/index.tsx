@@ -67,8 +67,12 @@ const Index = () => {
       }
     }).then(res => {
       setInquiryValidation(res.data);
-      console.log(inquiryValidation)
     });
+  };
+
+  const saveInquiryValidation = () => {
+    console.log(inquiryValidation)
+    return axios.patch(`${apiEndpoint}/inquiry-validation`, inquiryValidation);
   };
 
   const fetchCategories = (serviceId: number) => {
@@ -281,7 +285,7 @@ const Index = () => {
               </tbody>
             </table>
             <div className="text-end">
-              <button type="button" className="btn btn-outline-success">保存</button>
+              <button type="button" className="btn btn-outline-success" onClick={saveInquiryValidation}>保存</button>
             </div>
           </div>
           <div>

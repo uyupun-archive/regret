@@ -6,6 +6,7 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/uyupun/regret/database/query"
+	"github.com/uyupun/regret/models"
 )
 
 func GetInquiryValidation(c echo.Context) error {
@@ -20,4 +21,19 @@ func GetInquiryValidation(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, err)
 	}
 	return c.JSON(http.StatusOK, inquiryValidation)
+}
+
+func EditInquiryValidation(c echo.Context) error {
+	inquiryValidation := new(models.InquiryValidation)
+	err := c.Bind(&inquiryValidation)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, err)
+	}
+
+	err = query.EditInquiryValidation(*inquiryValidation)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err)
+	}
+
+	return c.JSON(http.StatusOK, "{}")
 }

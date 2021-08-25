@@ -37,6 +37,7 @@ func registerAdminRoutes(adm echo.Group) {
 	adm.DELETE("/service", admin.DeleteService)
 
 	adm.GET("/inquiry-validation", admin.GetInquiryValidation)
+	adm.PATCH("/inquiry-validation", admin.EditInquiryValidation)
 
 	adm.GET("/category", admin.GetCategories)
 	adm.POST("/category", admin.AddCategory)

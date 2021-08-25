@@ -17,8 +17,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     return res.status(200).json(_res.data);
   }
 
+  else if (req.method === 'PATCH') {
+    const _res = await axios.patch(`/inquiry-validation`, req.body);
+    return res.status(200).json(_res.data);
+  }
+
   else {
-    res.setHeader('Allow', ['GET', 'POST', 'PATCH', 'DELETE']);
+    res.setHeader('Allow', ['GET', 'PATCH']);
     return res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 };
