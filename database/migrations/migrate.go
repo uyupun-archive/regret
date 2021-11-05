@@ -17,7 +17,6 @@ func main() {
 	}
 
 	command := args[1]
-	fmt.Println(command)
 	if command == "up" {
 		migrateUp()
 	} else if command == "down" {
