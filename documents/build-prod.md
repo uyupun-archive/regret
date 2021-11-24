@@ -32,7 +32,7 @@ $ make test/inquiry
 $ make test/category
 ```
 
-- その他のコマンドの詳細に関しては[Makefile](../Makefile)を参照
+- その他のコマンドの詳細に関しては[Makefile.prod](../Makefile.prod)を参照
 
 ## 3. コンパネの環境構築
 
