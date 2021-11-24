@@ -26,10 +26,10 @@ $ make ps -f Makefile.prod
 # DBマイグレーションの実行
 $ make migrate/fresh -f Makefile.prod
 # シーダーの実行
-$ make seed
+$ make seed -f Makefile.prod
 # 外部公開APIの疎通テスト
-$ make test/inquiry
-$ make test/category
+$ make test/inquiry -f Makefile.prod
+$ make test/category -f Makefile.prod
 ```
 
 - その他のコマンドの詳細に関しては[Makefile.prod](../Makefile.prod)を参照
