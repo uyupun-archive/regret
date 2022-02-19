@@ -25,7 +25,12 @@ func AddService(c echo.Context) error {
 	}
 	service.AccessToken = randstr.String(20)
 
-	err = query.AddService(*service)
+	addedService, err := query.AddService(*service)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err)
+	}
+
+	err = query.AddInquiryValidation(addedService.ID)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err)
 	}

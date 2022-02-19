@@ -25,13 +25,13 @@ func GetServiceByAccessToken(accessToken string) (models.Service, error) {
 	return service, nil
 }
 
-func AddService(service models.Service) error {
+func AddService(service models.Service) (models.Service, error) {
 	db, err := database.ConnectGorm()
 	if err != nil {
-		return err
+		return service, err
 	}
 	db.Create(&service)
-	return nil
+	return service, nil
 }
 
 func EditService(after models.Service) error {
